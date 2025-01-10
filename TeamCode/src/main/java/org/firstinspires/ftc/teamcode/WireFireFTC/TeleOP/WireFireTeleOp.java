@@ -27,7 +27,10 @@ public class WireFireTeleOp extends LinearOpMode {
     final int MIN_HEIGHT = 0;
 
     //Create Variables for Servo
-
+    int intakeHandRotation = 0;
+    double ServoIncrement = 1;
+    final int MAX_INTAKEHAND_ROTATION = 1000;
+    final int MIN_INTAKEHAND_ROTATION = 0;
 
 
     //Create the objects for motors
@@ -124,7 +127,26 @@ public class WireFireTeleOp extends LinearOpMode {
                 setSlides(height);
             }
 
-
+            //IntakeHand Servo
+            if(gamepad2.left_bumper) {
+                intakeHandRotation += ServoIncrement;
+                setHand(intakeHandRotation);
+            }
+            else if(gamepad2.right_bumper) {
+                intakeHandRotation -= ServoIncrement;
+                setHand(intakeHandRotation);
+            }
+            
+            //Wrist Servo
+            if(gamepad2.right_trigger > 0) {
+                wristRotation.setPower(2.5);
+            }
+            else if(gamepad2.left_trigger > 0) {
+                wristRotation.setPower(-2.5);
+            }
+            else {
+                wristRotation.setPower(0);
+            }
 
             // Get gamepad inputs
             double forward = gamepad1.left_stick_y; // Forward/backward movement
@@ -177,5 +199,9 @@ public class WireFireTeleOp extends LinearOpMode {
         leftSlide.setPower(1);
         rightSlide.setTargetPosition(Height);
         rightSlide.setPower(1);
+    }
+    public void setHand(int Rotation){
+        Rotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
+        intakeHand.setPosition(Rotation);
     }
 }
