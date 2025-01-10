@@ -136,7 +136,7 @@ public class WireFireTeleOp extends LinearOpMode {
                 intakeHandRotation -= ServoIncrement;
                 setHand(intakeHandRotation);
             }
-            
+
             //Wrist Servo
             if(gamepad2.right_trigger > 0) {
                 wristRotation.setPower(2.5);
@@ -179,6 +179,10 @@ public class WireFireTeleOp extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftPower, backRightPower);
+            telemetry.addData("height:", height);
+            telemetry.addData("left slide ticks:", leftSlide.getCurrentPosition());
+            telemetry.addData("right slide ticks:", rightSlide.getCurrentPosition());
+            telemetry.addData("rotation:", rotation);
             telemetry.update();
 
             // Stop all motors when op mode is stopped
