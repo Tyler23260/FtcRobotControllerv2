@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -14,16 +15,16 @@ public class WireFireTeleOp extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     //Used to keep power
-    double PWR_MULTIPLIER = 0.75;
+    double PWR_MULTIPLIER = 0.83;
 
     //Create Variables for rotating slides
     int rotation = 0;
-    int INCREMENT = 20;
+    int INCREMENT = 5;
 
     //Create Variables for slides
     int height = 0;
-    double HEIGHT_INCREMENT = 20;
-    final int MAX_HEIGHT = 2000;
+    double HEIGHT_INCREMENT = 5;
+    final int MAX_HEIGHT = 3500;
     final int MIN_HEIGHT = 0;
 
     //Create Variables for Servo
@@ -40,8 +41,7 @@ public class WireFireTeleOp extends LinearOpMode {
     private DcMotor backright = null;
 
     private DcMotorEx slidesrotation = null;
-    private DcMotor leftSlide = null;
-    private DcMotor rightSlide = null;
+    private DcMotor slide_motor = null;
 
     //Create te objects for servos
 
@@ -58,8 +58,7 @@ public class WireFireTeleOp extends LinearOpMode {
         backright = hardwareMap.get(DcMotor.class, "backright");
 
         slidesrotation = hardwareMap.get(DcMotorEx.class, "rotation_motor");
-        leftSlide = hardwareMap.get(DcMotor.class, "leftSlide");
-        leftSlide = hardwareMap.get(DcMotor.class, "rightSlide");
+        slide_motor = hardwareMap.get(DcMotor.class, "slide_motor");
 
         //Initialize the Servos
         wristRotation = hardwareMap.get(CRServo.class, "wristServo");
@@ -81,9 +80,8 @@ public class WireFireTeleOp extends LinearOpMode {
 
         slidesrotation.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightSlide.setDirection(DcMotor.Direction.REVERSE);
+        slide_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slide_motor.setDirection(DcMotor.Direction.REVERSE);
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
@@ -91,8 +89,7 @@ public class WireFireTeleOp extends LinearOpMode {
 
         //Setting all target positions to zero so it doesn't jitter
         waitForStart();
-        rightSlide.setTargetPosition(0);
-        leftSlide.setTargetPosition(0);
+        slide_motor.setTargetPosition(0);
         slidesrotation.setTargetPosition(0);
         runtime.reset();
 
@@ -101,19 +98,17 @@ public class WireFireTeleOp extends LinearOpMode {
             //Start coding here >>>>>>>>>>>>
 
             //Setting modes and ZeroPower
-            leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            slide_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+            slide_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             slidesrotation.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             slidesrotation.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
             //Used for Slides_Motor see slide code for details
-            if(gamepad2.left_stick_y > 0.05) {
+            if(gamepad2.left_stick_y > 0.03) {
                 rotation += INCREMENT;
                 setSlidesrotation(rotation);
-            } else if (gamepad2.left_stick_y < -0.05) {
+            } else if (gamepad2.left_stick_y < -0.03) {
                 rotation -= INCREMENT;
                 setSlidesrotation(rotation);
             }
@@ -121,9 +116,11 @@ public class WireFireTeleOp extends LinearOpMode {
             //Code for Slides using values to determine how long for the motors to be set until it reaches Target Position
             if(gamepad2.y) {
                 height += HEIGHT_INCREMENT;
+                height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
                 setSlides(height);
             } else if (gamepad2.a) {
                 height -= HEIGHT_INCREMENT;
+                height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
                 setSlides(height);
             }
 
@@ -180,8 +177,7 @@ public class WireFireTeleOp extends LinearOpMode {
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftPower, backRightPower);
             telemetry.addData("height:", height);
-            telemetry.addData("left slide ticks:", leftSlide.getCurrentPosition());
-            telemetry.addData("right slide ticks:", rightSlide.getCurrentPosition());
+            telemetry.addData("left slide ticks:", slide_motor.getCurrentPosition());
             telemetry.addData("rotation:", rotation);
             telemetry.update();
 
@@ -199,10 +195,8 @@ public class WireFireTeleOp extends LinearOpMode {
 
     public void setSlides(int Height) {
         Height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
-        leftSlide.setTargetPosition(Height);
-        leftSlide.setPower(1);
-        rightSlide.setTargetPosition(Height);
-        rightSlide.setPower(1);
+        slide_motor.setTargetPosition(Height);
+        slide_motor.setPower(1);
     }
     public void setHand(int Rotation){
         Rotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
