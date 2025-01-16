@@ -19,20 +19,27 @@ public class WireFireTeleOp extends LinearOpMode {
 
     //Create Variables for rotating slides
     int rotation = 0;
-    int INCREMENT = 5;
+    final int INCREMENT = 3;
+    final int MAX_ROTATION = 1400;
+    final int MIN_ROTATION = 0;
 
     //Create Variables for slides
     int height = 0;
-    double HEIGHT_INCREMENT = 5;
-    final int MAX_HEIGHT = 3500;
+    final double HEIGHT_INCREMENT = 20;
+    final int MAX_HEIGHT = 4000;
+    final int ADJUSTED_MAX_HEIGHT = 4500;
     final int MIN_HEIGHT = 0;
 
     //Create Variables for Servo
-    int intakeHandRotation = 0;
-    double ServoIncrement = 1;
-    final int MAX_INTAKEHAND_ROTATION = 1000;
-    final int MIN_INTAKEHAND_ROTATION = 0;
+    double intakeHandRotation = 0.0;
+    double ServoHandIncrement = 0.01;
+    final double MAX_INTAKEHAND_ROTATION = 1;
+    final double MIN_INTAKEHAND_ROTATION = 0;
 
+    double intakeWristRotation = 0.0;
+    double ServoWristIncrement = 0.01;
+    final double MAX_INTAKEWRIST_ROTATION = 1;
+    final double MIN_INTAKEWRIST_ROTATION = 0;
 
     //Create the objects for motors
     private DcMotor frontleft = null;
@@ -44,8 +51,7 @@ public class WireFireTeleOp extends LinearOpMode {
     private DcMotor slide_motor = null;
 
     //Create te objects for servos
-
-    private CRServo wristRotation = null;
+    private Servo wristRotation = null;
     private Servo intakeHand = null;
 
 
@@ -61,7 +67,7 @@ public class WireFireTeleOp extends LinearOpMode {
         slide_motor = hardwareMap.get(DcMotor.class, "slide_motor");
 
         //Initialize the Servos
-        wristRotation = hardwareMap.get(CRServo.class, "wristServo");
+        wristRotation = hardwareMap.get(Servo.class, "wristServo");
         intakeHand = hardwareMap.get(Servo.class, "intakeServo");
 
 
@@ -71,13 +77,7 @@ public class WireFireTeleOp extends LinearOpMode {
         frontright.setDirection(DcMotor.Direction.FORWARD);
         backright.setDirection(DcMotor.Direction.FORWARD);
 
-        //Set Servo direction if needed
-        //intakeHand.etDirection(Servo.Direction.REVERSE);
-
         //Change RunMode
-
-
-
         slidesrotation.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         slide_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -107,42 +107,68 @@ public class WireFireTeleOp extends LinearOpMode {
             //Used for Slides_Motor see slide code for details
             if(gamepad2.left_stick_y > 0.03) {
                 rotation += INCREMENT;
-                setSlidesrotation(rotation);
+                rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
+                setSlidesrotation(rotation, 1.0);
             } else if (gamepad2.left_stick_y < -0.03) {
                 rotation -= INCREMENT;
-                setSlidesrotation(rotation);
+                rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
+                setSlidesrotation(rotation, 1.0);
             }
 
             //Code for Slides using values to determine how long for the motors to be set until it reaches Target Position
-            if(gamepad2.y) {
-                height += HEIGHT_INCREMENT;
-                height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
-                setSlides(height);
-            } else if (gamepad2.a) {
-                height -= HEIGHT_INCREMENT;
-                height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
-                setSlides(height);
+            if(rotation < 1150) {
+                if (gamepad2.y) {
+                    height += HEIGHT_INCREMENT;
+                    height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
+                    setSlides(height, 1.0);
+                } else if (gamepad2.a) {
+                    height -= HEIGHT_INCREMENT;
+                    height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
+                    setSlides(height, 1.0);
+                }
+            } else if(rotation > 1150){
+                if (gamepad2.y) {
+                    height += HEIGHT_INCREMENT;
+                    height = Math.max(MIN_HEIGHT, Math.min(ADJUSTED_MAX_HEIGHT, height));
+                    setSlides(height, 1.0);
+                } else if (gamepad2.a) {
+                    height -= HEIGHT_INCREMENT;
+                    height = Math.max(MIN_HEIGHT, Math.min(ADJUSTED_MAX_HEIGHT, height));
+                    setSlides(height, 1.0);
+                }
             }
 
             //IntakeHand Servo
             if(gamepad2.left_bumper) {
-                intakeHandRotation += ServoIncrement;
-                setHand(intakeHandRotation);
+                intakeHandRotation += ServoHandIncrement;
+                intakeHandRotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
+                setIntakeHand(intakeHandRotation);
             }
             else if(gamepad2.right_bumper) {
-                intakeHandRotation -= ServoIncrement;
-                setHand(intakeHandRotation);
+                intakeHandRotation -= ServoHandIncrement;
+                intakeHandRotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
+                setIntakeHand(intakeHandRotation);
             }
 
             //Wrist Servo
-            if(gamepad2.right_trigger > 0) {
-                wristRotation.setPower(2.5);
+            if(gamepad2.left_bumper) {
+                intakeWristRotation += ServoWristIncrement;
+                intakeWristRotation = Math.max(MIN_INTAKEWRIST_ROTATION, Math.min(MAX_INTAKEWRIST_ROTATION, intakeWristRotation));
+                setWristRotation(intakeWristRotation);
             }
-            else if(gamepad2.left_trigger > 0) {
-                wristRotation.setPower(-2.5);
+            else if(gamepad2.right_bumper) {
+                intakeWristRotation -= ServoWristIncrement;
+                intakeWristRotation = Math.max(MIN_INTAKEWRIST_ROTATION, Math.min(MAX_INTAKEWRIST_ROTATION, intakeWristRotation));
+                setWristRotation(intakeWristRotation);
             }
-            else {
-                wristRotation.setPower(0);
+
+            //Preset
+            if(gamepad2.dpad_up){
+                height = 4000;
+                setSlides(height, 0.9);
+            } else if(gamepad2.dpad_down){
+                height = 0;
+                setSlides(height, 0.9);
             }
 
             // Get gamepad inputs
@@ -176,9 +202,12 @@ public class WireFireTeleOp extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftPower, backRightPower);
-            telemetry.addData("height:", height);
-            telemetry.addData("left slide ticks:", slide_motor.getCurrentPosition());
-            telemetry.addData("rotation:", rotation);
+            telemetry.addData("Height:", height);
+            telemetry.addData("Slide Ticks:", slide_motor.getCurrentPosition());
+            telemetry.addData("Rotation:", rotation);
+            telemetry.addData("HandServo", intakeHand.getPosition());
+            telemetry.addData("HandServoRotation", intakeHandRotation);
+            telemetry.addData("WristRotation", wristRotation);
             telemetry.update();
 
             // Stop all motors when op mode is stopped
@@ -188,18 +217,21 @@ public class WireFireTeleOp extends LinearOpMode {
             backright.setPower(0);
         }
     }
-    public void setSlidesrotation(int rot) {
+    private void setSlidesrotation(int rot, double pow) {
         slidesrotation.setTargetPosition(rot);
-        slidesrotation.setPower(1.0);
+        slidesrotation.setPower(pow);
     }
 
-    public void setSlides(int Height) {
-        Height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
+    private void setSlides(int Height, double pow) {
         slide_motor.setTargetPosition(Height);
-        slide_motor.setPower(1);
+        slide_motor.setPower(pow);
     }
-    public void setHand(int Rotation){
-        Rotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
-        intakeHand.setPosition(Rotation);
+
+    private void setIntakeHand(double hand){
+        intakeHand.setPosition(hand);
+    }
+
+    private void setWristRotation(double wrist){
+        wristRotation.setPosition(wrist);
     }
 }
