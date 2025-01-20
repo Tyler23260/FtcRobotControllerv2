@@ -13,7 +13,7 @@ public class WireFireTeleOp extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     //Used to keep power
-    double PWR_MULTIPLIER = 0.83;
+    double PWR_MULTIPLIER = 0.93;
 
     //Create Variables for rotating slides
     int rotation = 0;
@@ -31,13 +31,13 @@ public class WireFireTeleOp extends LinearOpMode {
     //Create Variables for Servo
     double intakeHandRotation = 0.0;
     double ServoHandIncrement = 0.01;
-    final double MAX_INTAKEHAND_ROTATION = 1;
+    final double MAX_INTAKEHAND_ROTATION = 0.5;
     final double MIN_INTAKEHAND_ROTATION = 0;
 
     double intakeWristRotation = 0.0;
     double ServoWristIncrement = 0.01;
-    final double MAX_INTAKEWRIST_ROTATION = 1;
-    final double MIN_INTAKEWRIST_ROTATION = 0;
+    final double MAX_INTAKEWRIST_ROTATION = 0.9;
+    final double MIN_INTAKEWRIST_ROTATION = 0.2;
 
     //Create the objects for motors
     private DcMotor frontleft = null;
@@ -80,6 +80,9 @@ public class WireFireTeleOp extends LinearOpMode {
 
         slide_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slide_motor.setDirection(DcMotor.Direction.REVERSE);
+
+        wristRotation.setDirection(Servo.Direction.REVERSE);
+        intakeHand.setDirection(Servo.Direction.REVERSE);
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
