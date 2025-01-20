@@ -25,10 +25,30 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         initializeMotors();
         initializeServo();
         waitForStart();
-        movement( 1.1, 0.0, 1.0, 0.0);
+        //setSlidesrotation(0,0,0.0);
+        //setSlides(0,0,0.0);
+        //setWristRotation(0.0);
+        //setIntakeHand(0.0);
+        //movement(0.0,0.0,0.0,0.0);
+        movement( 0.8, -1.0, 0.0, 0.0);
         stopMotors();
-        movement( 0.5, 0.5, 0.0, 0.0);
-        stopMotors();
+        for(int i = 0; i < 3; i++) {
+            movement(0.2, 0.0, 2.0, 0.0);
+            stopMotors();
+            movement(0.6, 1.0, 0.0, 0.0);
+            stopMotors();
+            movement(0.6, -1.0, 0.0, 0.0);
+            stopMotors();
+        }
+        movement(0.6, 1.0, 0.0, 0.0);
+        movement(1.0,0.0,0.0,0.9);
+        sleep(2000);
+        setSlidesrotation(1,100,1.0);
+        sleep(500);
+        setSlides(1,1000,1.0);
+        sleep(500);
+        setWristRotation(0.0);
+        setIntakeHand(0.5);
     }
 
     // Method to initialize the motors

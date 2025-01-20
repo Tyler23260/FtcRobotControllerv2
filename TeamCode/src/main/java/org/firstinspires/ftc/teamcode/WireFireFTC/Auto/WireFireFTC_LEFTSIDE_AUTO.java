@@ -25,7 +25,7 @@ public class WireFireFTC_LEFTSIDE_AUTO extends LinearOpMode {
         initializeMotors();
         intializeServo();
         waitForStart();
-        
+
     }
 
     // Method to initialize the motors

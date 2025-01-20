@@ -2,10 +2,8 @@ package org.firstinspires.ftc.teamcode.WireFireFTC.TeleOP;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -139,12 +137,12 @@ public class WireFireTeleOp extends LinearOpMode {
             }
 
             //IntakeHand Servo
-            if(gamepad2.left_bumper) {
+            if(gamepad2.left_trigger > 0.0) {
                 intakeHandRotation += ServoHandIncrement;
                 intakeHandRotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
                 setIntakeHand(intakeHandRotation);
             }
-            else if(gamepad2.right_bumper) {
+            else if(gamepad2.right_trigger > 0.0) {
                 intakeHandRotation -= ServoHandIncrement;
                 intakeHandRotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
                 setIntakeHand(intakeHandRotation);
@@ -172,8 +170,8 @@ public class WireFireTeleOp extends LinearOpMode {
             }
 
             // Get gamepad inputs
-            double forward = gamepad1.left_stick_y; // Forward/backward movement
-            double strafe = -gamepad1.left_stick_x;  // Left/right movement
+            double forward = -gamepad1.left_stick_y; // Forward/backward movement
+            double strafe = gamepad1.left_stick_x;  // Left/right movement
             double turn = gamepad1.right_stick_x;   // Turn left/right
 
             // Calculate motor powers
@@ -207,7 +205,8 @@ public class WireFireTeleOp extends LinearOpMode {
             telemetry.addData("Rotation:", rotation);
             telemetry.addData("HandServo", intakeHand.getPosition());
             telemetry.addData("HandServoRotation", intakeHandRotation);
-            telemetry.addData("WristRotation", wristRotation);
+            telemetry.addData("WristRotation", wristRotation.getPosition());
+            telemetry.addData("WristServoRotation", intakeWristRotation);
             telemetry.update();
 
             // Stop all motors when op mode is stopped
