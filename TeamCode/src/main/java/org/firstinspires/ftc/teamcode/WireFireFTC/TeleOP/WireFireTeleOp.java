@@ -165,11 +165,48 @@ public class WireFireTeleOp extends LinearOpMode {
 
             //Preset
             if(gamepad2.dpad_up){
-                height = 4000;
+                height = 0;
                 setSlides(height, 0.9);
+                intakeWristRotation = 0.5;
+                setWristRotation(intakeWristRotation);
+                rotation = 750;
+                setSlidesrotation(rotation, 0.9);
+                sleep(100);
+                height = 3360;
+                setSlides(height, 0.9);
+                sleep(500);
+                rotation = 625;
+                setSlidesrotation(rotation, 0.9);
+                sleep(500);
+                intakeHandRotation = 0.5;
+                setIntakeHand(intakeHandRotation);
+                height = 0;
+                setSlides(height, 0.9);
+                intakeWristRotation = 0.0;
+                setWristRotation(intakeWristRotation);
+                rotation = 0;
+                setSlidesrotation(rotation, 0.9);
+            } else if(gamepad2.dpad_left){
+                rotation = 1300;
+                setSlidesrotation(rotation, 0.9);
+                height = 4500;
+                setSlides(height, 0.9);
+                intakeWristRotation = 0.7;
+                setWristRotation(intakeWristRotation);
+                sleep(100);
+                intakeHandRotation = 0.5;
+                setIntakeHand(intakeHandRotation);
             } else if(gamepad2.dpad_down){
                 height = 0;
                 setSlides(height, 0.9);
+                rotation = 0;
+                setSlidesrotation(rotation, 0.9);
+                intakeHandRotation = 0.5;
+                setIntakeHand(intakeHandRotation);
+                intakeWristRotation = 0.2;
+                setWristRotation(intakeWristRotation);
+            } else if(gamepad2.dpad_right){
+                PWR_MULTIPLIER = 1.0;
             }
 
             // Get gamepad inputs
@@ -219,6 +256,45 @@ public class WireFireTeleOp extends LinearOpMode {
             backright.setPower(0);
         }
     }
+
+    private void movement(double seconds, double Y_LEFT_INPUT, double X_LEFT_INPUT, double X_RIGHT_INPUT){
+        // Get gamepad inputs
+        double forward = -Y_LEFT_INPUT; // Forward/backward movement
+        double strafe = X_LEFT_INPUT;  // Left/right movement
+        double turn = X_RIGHT_INPUT;   // Turn left/right
+
+        // Calculate motor powers
+        double frontLeftPower = forward + strafe + turn;
+        double frontRightPower = forward - strafe - turn;
+        double backLeftPower = forward - strafe + turn;
+        double backRightPower = forward + strafe - turn;
+
+        // Normalize motor powers to stay within the range of -1 to 1
+        double maxPower = Math.max(Math.abs(frontLeftPower), Math.max(Math.abs(frontRightPower),
+                Math.max(Math.abs(backLeftPower), Math.abs(backRightPower))));
+        if (maxPower > 1) {
+            frontLeftPower /= maxPower;
+            frontRightPower /= maxPower;
+            backLeftPower /= maxPower;
+            backRightPower /= maxPower;
+        }
+
+        // Set motor powers
+        frontleft.setPower(frontLeftPower);
+        frontright.setPower(frontRightPower);
+        backleft.setPower(backLeftPower);
+        backright.setPower(backRightPower);
+
+        // Optional telemetry
+        telemetry.addData("Front Left Power", frontLeftPower);
+        telemetry.addData("Front Right Power", frontRightPower);
+        telemetry.addData("Back Left Power", backLeftPower);
+        telemetry.addData("Back Right Power", backRightPower);
+        telemetry.update();
+
+        sleep((long) (seconds * 1000));
+    }
+
     private void setSlidesrotation(int rot, double pow) {
         slidesrotation.setTargetPosition(rot);
         slidesrotation.setPower(pow);

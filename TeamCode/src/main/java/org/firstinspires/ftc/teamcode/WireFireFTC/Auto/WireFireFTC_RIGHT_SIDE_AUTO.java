@@ -47,7 +47,7 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         sleep(500);
         setSlides(1,1000,1.0);
         sleep(500);
-        setWristRotation(0.0);
+        setWristRotation(0.2);
         setIntakeHand(0.5);
     }
 
