@@ -14,7 +14,7 @@ public class WireFireTeleOp extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     //Used to keep power
-    double PWR_MULTIPLIER = 0.93;
+    double PWR_MULTIPLIER = 0.77;
 
     //Create Variables for rotating slides
     int rotation = 0;
@@ -122,11 +122,11 @@ public class WireFireTeleOp extends LinearOpMode {
 
             //Used for Slides_Motor see slide code for details
             if(gamepad2.left_stick_y > 0.03) {
-                rotation += INCREMENT;
+                rotation -= INCREMENT;
                 rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
                 setSlidesrotation(rotation, 1.0);
             } else if (gamepad2.left_stick_y < -0.03) {
-                rotation -= INCREMENT;
+                rotation += INCREMENT;
                 rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
                 setSlidesrotation(rotation, 1.0);
             }
@@ -154,75 +154,62 @@ public class WireFireTeleOp extends LinearOpMode {
                 }
             }
 
+
             //IntakeHand Servo
             if(gamepad2.left_trigger > 0.0) {
-                intakeHandRotation += ServoHandIncrement;
+                intakeHandRotation -= ServoHandIncrement;
                 intakeHandRotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
                 setIntakeHand(intakeHandRotation);
             }
             else if(gamepad2.right_trigger > 0.0) {
-                intakeHandRotation -= ServoHandIncrement;
+                intakeHandRotation += ServoHandIncrement;
                 intakeHandRotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
                 setIntakeHand(intakeHandRotation);
             }
 
             //Wrist Servo
             if(gamepad2.left_bumper) {
-                intakeWristRotation += ServoWristIncrement;
+                intakeWristRotation -= ServoWristIncrement;
                 intakeWristRotation = Math.max(MIN_INTAKEWRIST_ROTATION, Math.min(MAX_INTAKEWRIST_ROTATION, intakeWristRotation));
                 setWristRotation(intakeWristRotation);
             }
             else if(gamepad2.right_bumper) {
-                intakeWristRotation -= ServoWristIncrement;
+                intakeWristRotation += ServoWristIncrement;
                 intakeWristRotation = Math.max(MIN_INTAKEWRIST_ROTATION, Math.min(MAX_INTAKEWRIST_ROTATION, intakeWristRotation));
                 setWristRotation(intakeWristRotation);
             }
 
             //Preset
-            if(gamepad2.dpad_up){
-                height = 0;
-                setSlides(height, 0.9);
-                intakeWristRotation = 0.5;
-                setWristRotation(intakeWristRotation);
-                rotation = 750;
-                setSlidesrotation(rotation, 0.9);
-                sleep(100);
-                height = 3360;
-                setSlides(height, 0.9);
-                sleep(500);
-                rotation = 625;
-                setSlidesrotation(rotation, 0.9);
-                sleep(500);
-                intakeHandRotation = 0.5;
-                setIntakeHand(intakeHandRotation);
-                height = 0;
-                setSlides(height, 0.9);
-                intakeWristRotation = 0.0;
-                setWristRotation(intakeWristRotation);
-                rotation = 0;
-                setSlidesrotation(rotation, 0.9);
-            } else if(gamepad2.dpad_left){
-                rotation = 1300;
-                setSlidesrotation(rotation, 0.9);
+            if(gamepad2.dpad_up){ //for the high basket
                 height = 4500;
-                setSlides(height, 0.9);
-                intakeWristRotation = 0.7;
+                setSlides(height, 0.5);
+                intakeWristRotation = 0.38;
                 setWristRotation(intakeWristRotation);
-                sleep(100);
-                intakeHandRotation = 0.5;
-                setIntakeHand(intakeHandRotation);
-            } else if(gamepad2.dpad_down){
+                sleep(250);
+                rotation = 1300;
+                setSlidesrotation(rotation, 0.3);
+
+            } else if(gamepad2.dpad_right){ //for the human player
+                height = 1640;
+                setSlides(height, 0.5);
+                intakeWristRotation = 0.52;
+                setWristRotation(intakeWristRotation);
+                rotation = 393;
+                setSlidesrotation(rotation, 0.3);
+
+            } else if(gamepad2.dpad_left) { //for the specimens on the bar
+                height = 3260;
+                setSlides(height, 0.5);
+                intakeWristRotation = 0.84;
+                setWristRotation(intakeWristRotation);
+                sleep(250);
+                rotation = 610;
+                setSlidesrotation(rotation, 0.3);
+            } else if (gamepad2.dpad_down) { //retract
                 height = 0;
-                setSlides(height, 0.9);
-                rotation = 0;
-                setSlidesrotation(rotation, 0.9);
-                intakeHandRotation = 0.5;
-                setIntakeHand(intakeHandRotation);
-                intakeWristRotation = 0.2;
-                setWristRotation(intakeWristRotation);
-            } else if(gamepad2.dpad_right){
-                PWR_MULTIPLIER = 1.0;
+                setSlides(height, 0.7);
             }
+
 
             // Get gamepad inputs
             double forward = -gamepad1.left_stick_y; // Forward/backward movement
