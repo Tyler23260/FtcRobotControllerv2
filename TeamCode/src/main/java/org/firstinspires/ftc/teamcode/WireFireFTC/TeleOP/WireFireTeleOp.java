@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.WireFireFTC.TeleOP;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -48,10 +49,12 @@ public class WireFireTeleOp extends LinearOpMode {
     private DcMotorEx slidesrotation = null;
     private DcMotor slide_motor = null;
 
-    //Create te objects for servos
+    //Create the objects for servos
     private Servo wristRotation = null;
     private Servo intakeHand = null;
 
+    //Create the objects for sensors
+    //private ColorSensor colorSensor = null;
 
     @Override
     public void runOpMode() {
@@ -68,6 +71,8 @@ public class WireFireTeleOp extends LinearOpMode {
         wristRotation = hardwareMap.get(Servo.class, "wristServo");
         intakeHand = hardwareMap.get(Servo.class, "intakeServo");
 
+        //Initialize the Sensors
+        //colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
 
         // Set motor directions if needed
         frontleft.setDirection(DcMotor.Direction.REVERSE);
@@ -97,7 +102,17 @@ public class WireFireTeleOp extends LinearOpMode {
         // Main control loop
         while (opModeIsActive()) {
             //Start coding here >>>>>>>>>>>>
+            /*
+            //ColorSensor
+            int red = colorSensor.red();
+            int green = colorSensor.green();
+            int blue = colorSensor.blue();
 
+            // Send color values to telemetry for debugging
+            telemetry.addData("Red", red);
+            telemetry.addData("Green", green);
+            telemetry.addData("Blue", blue);
+            */
             //Setting modes and ZeroPower
             slide_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
