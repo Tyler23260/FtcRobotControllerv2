@@ -32,7 +32,7 @@ public class WireFireTeleOp extends LinearOpMode {
     //Create Variables for Servo
     double intakeHandRotation = 0.0;
     double ServoHandIncrement = 0.01;
-    final double MAX_INTAKEHAND_ROTATION = 0.5;
+    final double MAX_INTAKEHAND_ROTATION = 0.475;
     final double MIN_INTAKEHAND_ROTATION = 0;
 
     double intakeWristRotation = 0.0;
@@ -182,7 +182,7 @@ public class WireFireTeleOp extends LinearOpMode {
             //Preset
             if(gamepad2.dpad_up){ //for the high basket
                 height = 4500;
-                setSlides(height, 0.5);
+                setSlides(height, 0.7);
                 intakeWristRotation = 0.38;
                 setWristRotation(intakeWristRotation);
                 sleep(250);
@@ -191,7 +191,7 @@ public class WireFireTeleOp extends LinearOpMode {
 
             } else if(gamepad2.dpad_right){ //for the human player
                 height = 1640;
-                setSlides(height, 0.5);
+                setSlides(height, 0.7);
                 intakeWristRotation = 0.52;
                 setWristRotation(intakeWristRotation);
                 rotation = 393;
@@ -199,7 +199,7 @@ public class WireFireTeleOp extends LinearOpMode {
 
             } else if(gamepad2.dpad_left) { //for the specimens on the bar
                 height = 3260;
-                setSlides(height, 0.5);
+                setSlides(height, 0.7);
                 intakeWristRotation = 0.84;
                 setWristRotation(intakeWristRotation);
                 sleep(250);
