@@ -14,7 +14,7 @@ public class WireFireTeleOp extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     //Used to keep power
-    double PWR_MULTIPLIER = 0.85;
+    double PWR_MULTIPLIER = 0.90;
 
     //Create Variables for rotating slides
     int rotation = 0;
@@ -24,19 +24,19 @@ public class WireFireTeleOp extends LinearOpMode {
 
     //Create Variables for slides
     int height = 0;
-    final double HEIGHT_INCREMENT = 20;
+    final double HEIGHT_INCREMENT = 50;
     final int MAX_HEIGHT = 4000;
     final int ADJUSTED_MAX_HEIGHT = 4500;
     final int MIN_HEIGHT = 0;
 
     //Create Variables for Servo
     double intakeHandRotation = 0.0;
-    double ServoHandIncrement = 0.02;
-    final double MAX_INTAKEHAND_ROTATION = 0.20;
+    double ServoHandIncrement = 0.05;
+    final double MAX_INTAKEHAND_ROTATION = 0.50;
     final double MIN_INTAKEHAND_ROTATION = 0;
 
     double intakeWristRotation = 0.0;
-    double ServoWristIncrement = 0.02;
+    double ServoWristIncrement = 0.05;
     final double MAX_INTAKEWRIST_ROTATION = 0.9;
     final double MIN_INTAKEWRIST_ROTATION = 0.2;
 
@@ -125,7 +125,8 @@ public class WireFireTeleOp extends LinearOpMode {
                 rotation -= INCREMENT;
                 rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
                 setSlidesrotation(rotation, 1.0);
-            } else if (gamepad2.left_stick_y < -0.03) {
+            }
+            else if (gamepad2.left_stick_y < -0.03) {
                 rotation += INCREMENT;
                 rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
                 setSlidesrotation(rotation, 1.0);
@@ -137,17 +138,20 @@ public class WireFireTeleOp extends LinearOpMode {
                     height += HEIGHT_INCREMENT;
                     height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
                     setSlides(height, 1.0);
-                } else if (gamepad2.a) {
+                }
+                else if (gamepad2.a) {
                     height -= HEIGHT_INCREMENT;
                     height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
                     setSlides(height, 1.0);
                 }
-            } else if(rotation > 1150){
+            }
+            else if(rotation > 1150){
                 if (gamepad2.y) {
                     height += HEIGHT_INCREMENT;
                     height = Math.max(MIN_HEIGHT, Math.min(ADJUSTED_MAX_HEIGHT, height));
                     setSlides(height, 1.0);
-                } else if (gamepad2.a) {
+                }
+                else if (gamepad2.a) {
                     height -= HEIGHT_INCREMENT;
                     height = Math.max(MIN_HEIGHT, Math.min(ADJUSTED_MAX_HEIGHT, height));
                     setSlides(height, 1.0);
@@ -189,7 +193,8 @@ public class WireFireTeleOp extends LinearOpMode {
                 rotation = 1300;
                 setSlidesrotation(rotation, 0.3);
 
-            } else if(gamepad2.dpad_right){ //for the human player
+            }
+            else if(gamepad2.dpad_right){ //for the human player
                 height = 1640;
                 setSlides(height, 0.7);
                 intakeWristRotation = 0.52;
@@ -197,7 +202,8 @@ public class WireFireTeleOp extends LinearOpMode {
                 rotation = 393;
                 setSlidesrotation(rotation, 0.3);
 
-            } else if(gamepad2.dpad_left) { //for the specimens on the bar
+            }
+            else if(gamepad2.dpad_left) { //for the specimens on the bar
                 height = 3260;
                 setSlides(height, 0.7);
                 intakeWristRotation = 0.84;
@@ -205,7 +211,8 @@ public class WireFireTeleOp extends LinearOpMode {
                 sleep(250);
                 rotation = 650;
                 setSlidesrotation(rotation, 0.3);
-            } else if (gamepad2.dpad_down) { //retract
+            }
+            else if (gamepad2.dpad_down) { //retract
                 height = 100;
                 setSlides(height, 1.0);
                 sleep(150);
@@ -213,9 +220,11 @@ public class WireFireTeleOp extends LinearOpMode {
                 setSlidesrotation(rotation, 0.4);
                 intakeWristRotation = 0.2;
                 setWristRotation(intakeWristRotation);
-            } else if (gamepad2.x){ //To reset auto Left
+            }
+            else if (gamepad2.x){ //To reset auto Left
 
-            } else if(gamepad2.b){ //To reset auto Right
+            }
+            else if(gamepad2.b){ //To reset auto Right
 
             }
 
