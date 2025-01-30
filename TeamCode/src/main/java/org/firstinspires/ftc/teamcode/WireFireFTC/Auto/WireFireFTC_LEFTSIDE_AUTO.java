@@ -5,18 +5,37 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "Leftside")
 public class WireFireFTC_LEFTSIDE_AUTO extends LinearOpMode {
-    private DcMotor frontleft;
-    private DcMotor frontright;
-    private DcMotor backleft;
-    private DcMotor backright;
+    //Used for Telemetry
+    private ElapsedTime runtime = new ElapsedTime();
+
+    //Used to keep power
+    double PWR_MULTIPLIER = 0.77;
+
+    //Create Variables for rotating slides
+    int rotation = 0;
+
+    //Create Variables for slides
+    int height = 0;
+
+    //Create Variables for Servo
+    double intakeHandRotation = 0.0;
+
+    double intakeWristRotation = 0.0;
+
+    //Create the objects for motors
+    private DcMotor frontleft = null;
+    private DcMotor frontright = null;
+    private DcMotor backleft = null;
+    private DcMotor backright = null;
 
     private DcMotorEx slidesrotation = null;
     private DcMotor slide_motor = null;
 
-    //Create te objects for servos
+    //Create the objects for servos
     private Servo wristRotation = null;
     private Servo intakeHand = null;
 
@@ -25,7 +44,17 @@ public class WireFireFTC_LEFTSIDE_AUTO extends LinearOpMode {
         initializeMotors();
         intializeServo();
         waitForStart();
-
+        movement(1.25, 0.0, 2.0, 0.0);
+        stopMotors();
+        rotation = 0;
+        setSlidesrotation(0.1, rotation,1.0);
+        movement(0.1, 0.0, 0.0, -1.0);
+        intakeWristRotation = 0.2;
+        setWristRotation(intakeWristRotation);
+        intakeHandRotation = 0.5;
+        setIntakeHand(intakeHandRotation);
+        height = 3200;
+        setSlides(0.6,height,1.0);
     }
 
     // Method to initialize the motors

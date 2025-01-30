@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name = "WireFire-TeleOp",group = "Linear OpMode")
-public class WireFireTeleOp extends LinearOpMode {
+@TeleOp(name = "Testing-TeleOp", group = "Linear OpMode")
+public class Testing_TeleOp extends LinearOpMode {
     //Used for Telemetry
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -31,12 +31,12 @@ public class WireFireTeleOp extends LinearOpMode {
 
     //Create Variables for Servo
     double intakeHandRotation = 0.0;
-    double ServoHandIncrement = 0.02;
+    double ServoHandIncrement = 0.04;
     final double MAX_INTAKEHAND_ROTATION = 0.20;
     final double MIN_INTAKEHAND_ROTATION = 0;
 
     double intakeWristRotation = 0.0;
-    double ServoWristIncrement = 0.02;
+    double ServoWristIncrement = 0.04;
     final double MAX_INTAKEWRIST_ROTATION = 0.9;
     final double MIN_INTAKEWRIST_ROTATION = 0.2;
 
@@ -121,11 +121,12 @@ public class WireFireTeleOp extends LinearOpMode {
             slidesrotation.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
             //Used for Slides_Motor see slide code for details
-            if(gamepad2.left_stick_y > 0.03) {
+            if(gamepad2.left_stick_y > 0.0) {
                 rotation -= INCREMENT;
                 rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
                 setSlidesrotation(rotation, 1.0);
-            } else if (gamepad2.left_stick_y < -0.03) {
+            }
+            else if (gamepad2.left_stick_y < 0.0) {
                 rotation += INCREMENT;
                 rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
                 setSlidesrotation(rotation, 1.0);
@@ -133,21 +134,23 @@ public class WireFireTeleOp extends LinearOpMode {
 
             //Code for Slides using values to determine how long for the motors to be set until it reaches Target Position
             if(rotation < 1150) {
-                if (gamepad2.y) {
+                if (gamepad2.right_stick_y > 0.0) {
                     height += HEIGHT_INCREMENT;
                     height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
                     setSlides(height, 1.0);
-                } else if (gamepad2.a) {
+                }
+                else if (gamepad2.right_stick_y < 0.0) {
                     height -= HEIGHT_INCREMENT;
                     height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
                     setSlides(height, 1.0);
                 }
             } else if(rotation > 1150){
-                if (gamepad2.y) {
+                if (gamepad2.right_stick_y > 0.0) {
                     height += HEIGHT_INCREMENT;
                     height = Math.max(MIN_HEIGHT, Math.min(ADJUSTED_MAX_HEIGHT, height));
                     setSlides(height, 1.0);
-                } else if (gamepad2.a) {
+                }
+                else if (gamepad2.right_stick_y < 0.0) {
                     height -= HEIGHT_INCREMENT;
                     height = Math.max(MIN_HEIGHT, Math.min(ADJUSTED_MAX_HEIGHT, height));
                     setSlides(height, 1.0);
@@ -156,14 +159,12 @@ public class WireFireTeleOp extends LinearOpMode {
 
 
             //IntakeHand Servo
-            if(gamepad2.left_trigger > 0.0) {
-                intakeHandRotation -= ServoHandIncrement;
-                intakeHandRotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
-                setIntakeHand(intakeHandRotation);
-            }
-            else if(gamepad2.right_trigger > 0.0) {
+            if(gamepad2.right_trigger > 0.0) {
                 intakeHandRotation += ServoHandIncrement;
                 intakeHandRotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
+                setIntakeHand(intakeHandRotation);
+            } else{
+                intakeHandRotation = 0.0;
                 setIntakeHand(intakeHandRotation);
             }
 
@@ -213,10 +214,6 @@ public class WireFireTeleOp extends LinearOpMode {
                 setSlidesrotation(rotation, 0.4);
                 intakeWristRotation = 0.2;
                 setWristRotation(intakeWristRotation);
-            } else if (gamepad2.x){ //To reset auto Left
-
-            } else if(gamepad2.b){ //To reset auto Right
-
             }
 
 

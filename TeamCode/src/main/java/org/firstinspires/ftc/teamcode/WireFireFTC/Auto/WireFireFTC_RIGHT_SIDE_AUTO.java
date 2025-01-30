@@ -5,18 +5,37 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "Rightside")
 public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
-    private DcMotor frontleft;
-    private DcMotor frontright;
-    private DcMotor backleft;
-    private DcMotor backright;
+    //Used for Telemetry
+    private ElapsedTime runtime = new ElapsedTime();
+
+    //Used to keep power
+    double PWR_MULTIPLIER = 0.77;
+
+    //Create Variables for rotating slides
+    int rotation = 0;
+
+    //Create Variables for slides
+    int height = 0;
+
+    //Create Variables for Servo
+    double intakeHandRotation = 0.0;
+
+    double intakeWristRotation = 0.0;
+
+    //Create the objects for motors
+    private DcMotor frontleft = null;
+    private DcMotor frontright = null;
+    private DcMotor backleft = null;
+    private DcMotor backright = null;
 
     private DcMotorEx slidesrotation = null;
     private DcMotor slide_motor = null;
 
-    //Create te objects for servos
+    //Create the objects for servos
     private Servo wristRotation = null;
     private Servo intakeHand = null;
 
@@ -30,25 +49,39 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         //setWristRotation(0.0);
         //setIntakeHand(0.0);
         //movement(0.0,0.0,0.0,0.0);
+        intakeWristRotation = 0.9;
+        setWristRotation(intakeWristRotation);
+        intakeHandRotation = 0.0;
+        setIntakeHand(intakeHandRotation);
+        movement(0.5,0.0,1.0,0.0);
         movement( 0.8, -1.0, 0.0, 0.0);
         stopMotors();
         for(int i = 0; i < 3; i++) {
-            movement(0.2, 0.0, 2.0, 0.0);
+            sleep(250);
+            movement(0.25, 0.0, 2.0, 0.0);
             stopMotors();
-            movement(0.6, 1.0, 0.0, 0.0);
+            sleep(250);
+            movement(0.85, 1.0, 0.0, 0.0);
             stopMotors();
-            movement(0.6, -1.0, 0.0, 0.0);
+            sleep(250);
+            movement(0.75, -1.0, 0.0, 0.0);
             stopMotors();
         }
-        movement(0.6, 1.0, 0.0, 0.0);
-        movement(1.0,0.0,0.0,0.9);
-        sleep(2000);
-        setSlidesrotation(1,100,1.0);
-        sleep(500);
-        setSlides(1,1000,1.0);
-        sleep(500);
-        setWristRotation(0.2);
-        setIntakeHand(0.5);
+        movement(0.90,1.0,0.0,0.0);
+        stopMotors();
+        movement(1.25, 0.0, 2.0, 0.0);
+        stopMotors();
+        height = 3260;
+        setSlides(1.5, height, 0.7);
+        intakeWristRotation = 0.84;
+        setWristRotation(intakeWristRotation);
+        sleep(250);
+        rotation = 650;
+        setSlidesrotation(1.0, rotation, 0.5);
+        height = 3460;
+        setSlides(1.5, height, 0.7);
+        intakeHandRotation = 0.0;
+        setIntakeHand(intakeHandRotation);
     }
 
     // Method to initialize the motors
