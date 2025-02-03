@@ -42,35 +42,53 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         initializeServo();
         waitForStart();
         //Start of autonomous
+        intakeHandRotation = 0.0;
+        setIntakeHand(intakeHandRotation);
+        sleep(500);
         intakeWristRotation = 0.9;
         setWristRotation(intakeWristRotation);
-        intakeHandRotation = 0.0;
-        setIntakeHand(intakeHandRotation);
+        sleep(1000);
         movement(0.65,0.0,1.0,0.0);
-        movement( 0.65, 0.0, 0.0, -0.6);
+        movement( 0.62, 0.0, 0.0, -0.6);
         movement( 1.0, 0.0, 1.0, 0.0);
         stopMotors();
-        for(int i = 0; i < 3; i++) {
-        movement(0.3, 0.5, 0.0, 0.0);
-        stopMotors();
-        movement(0.8, 0.0, -1.0, 0.0);
-
-        }
-        movement(0.90,1.0,0.0,0.0);
-        stopMotors();
-        movement(1.25, 0.0, -2.0, 0.0);
-        stopMotors();
-        height = 3260;
-        setSlides(height, 0.7);
-        intakeWristRotation = 0.84;
-        setWristRotation(intakeWristRotation);
         sleep(250);
-        rotation = 650;
-        setSlidesrotation(rotation, 0.5);
-        height = 3460;
-        setSlides(height, 0.7);
-        intakeHandRotation = 0.0;
-        setIntakeHand(intakeHandRotation);
+        movement(0.4, 0.6, 0.0, 0.0);
+        stopMotors();
+        sleep(250);
+        movement( 0.2, 0.0, 0.0, 0.3);
+        stopMotors();
+        sleep(500);
+        movement(0.92, 0.0, -1.0, 0.0);
+        stopMotors();
+        sleep(500);
+        movement(0.4,-0.5,0.0,0.0);
+        stopMotors();
+        sleep(500);
+        movement(0.92, 0.0, 1.0, 0.0);
+        stopMotors();
+        sleep(500);
+        movement(0.2, 0.6, 0.0, 0.0);
+        stopMotors();
+        sleep(250);
+        movement( 0.2, 0.0, 0.0, 0.3);
+        stopMotors();
+        sleep(500);
+        movement(0.92, 0.0, -1.0, 0.0);
+        stopMotors();
+        sleep(500);
+        movement(0.4,-0.5,0.0,0.0);
+        stopMotors();
+        sleep(500);
+        movement(0.2, 0.6, 0.0, 0.0);
+        stopMotors();
+        sleep(500);
+        movement(0.92, 0.0, -1.0, 0.0);
+        stopMotors();
+        sleep(500);
+        movement(0.4,-0.5,0.0,0.0);
+        stopMotors();
+        sleep(500);
     }
 
     // Method to initialize the motors
@@ -94,6 +112,9 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         //Initialize the Servos
         wristRotation = hardwareMap.get(Servo.class, "wristServo");
         intakeHand = hardwareMap.get(Servo.class, "intakeServo");
+
+        wristRotation.setDirection(Servo.Direction.REVERSE);
+        intakeHand.setDirection(Servo.Direction.REVERSE);
     }
 
     // Method to stop the motors

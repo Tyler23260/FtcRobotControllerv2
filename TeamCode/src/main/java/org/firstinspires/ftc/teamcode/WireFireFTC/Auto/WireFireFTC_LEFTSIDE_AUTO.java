@@ -84,6 +84,9 @@ public class WireFireFTC_LEFTSIDE_AUTO extends LinearOpMode {
         //Initialize the Servos
         wristRotation = hardwareMap.get(Servo.class, "wristServo");
         intakeHand = hardwareMap.get(Servo.class, "intakeServo");
+
+        wristRotation.setDirection(Servo.Direction.REVERSE);
+        intakeHand.setDirection(Servo.Direction.REVERSE);
     }
 
     // Method to stop the motors
