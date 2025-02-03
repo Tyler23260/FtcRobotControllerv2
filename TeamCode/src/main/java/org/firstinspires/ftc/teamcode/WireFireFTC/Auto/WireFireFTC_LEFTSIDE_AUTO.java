@@ -47,14 +47,23 @@ public class WireFireFTC_LEFTSIDE_AUTO extends LinearOpMode {
         movement(1.25, 0.0, 2.0, 0.0);
         stopMotors();
         rotation = 0;
-        setSlidesrotation(0.1, rotation,1.0);
+        setSlidesrotation(rotation,1.0);
         movement(0.1, 0.0, 0.0, -1.0);
         intakeWristRotation = 0.2;
         setWristRotation(intakeWristRotation);
         intakeHandRotation = 0.5;
         setIntakeHand(intakeHandRotation);
         height = 3200;
-        setSlides(0.6,height,1.0);
+        setSlides(height,1.0);
+        sleep(1000);
+        intakeHandRotation = 0.0;
+        rotation = 1300;
+        setSlidesrotation(rotation, 0.3);
+        sleep(1000);
+        height = 4500;
+        setSlides(height, 0.7);
+        intakeWristRotation = 0.38;
+        setWristRotation(intakeWristRotation);
     }
 
     // Method to initialize the motors
@@ -126,18 +135,14 @@ public class WireFireFTC_LEFTSIDE_AUTO extends LinearOpMode {
         sleep((long) (seconds * 1000));
     }
 
-    private void setSlidesrotation(double seconds, int rot, double pow) {
+    private void setSlidesrotation(int rot, double pow) {
         slidesrotation.setTargetPosition(rot);
         slidesrotation.setPower(pow);
-
-        sleep((long) (seconds * 1000));
     }
 
-    private void setSlides(double seconds, int Height, double pow) {
+    private void setSlides(int Height, double pow) {
         slide_motor.setTargetPosition(Height);
         slide_motor.setPower(pow);
-
-        sleep((long) (seconds * 1000));
     }
 
     private void setIntakeHand(double hand){

@@ -72,14 +72,14 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         movement(1.25, 0.0, -2.0, 0.0);
         stopMotors();
         height = 3260;
-        setSlides(1.5, height, 0.7);
+        setSlides(height, 0.7);
         intakeWristRotation = 0.84;
         setWristRotation(intakeWristRotation);
         sleep(250);
         rotation = 650;
-        setSlidesrotation(1.0, rotation, 0.5);
+        setSlidesrotation(rotation, 0.5);
         height = 3460;
-        setSlides(1.5, height, 0.7);
+        setSlides(height, 0.7);
         intakeHandRotation = 0.0;
         setIntakeHand(intakeHandRotation);
     }
@@ -153,18 +153,14 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         sleep((long) (seconds * 1000));
     }
 
-    private void setSlidesrotation(double seconds, int rot, double pow) {
+    private void setSlidesrotation(int rot, double pow) {
         slidesrotation.setTargetPosition(rot);
         slidesrotation.setPower(pow);
-
-        sleep((long) (seconds * 1000));
     }
 
-    private void setSlides(double seconds, int Height, double pow) {
+    private void setSlides(int Height, double pow) {
         slide_motor.setTargetPosition(Height);
         slide_motor.setPower(pow);
-
-        sleep((long) (seconds * 1000));
     }
 
     private void setIntakeHand(double hand){
