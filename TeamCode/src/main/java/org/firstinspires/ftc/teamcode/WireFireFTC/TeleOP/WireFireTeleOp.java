@@ -31,12 +31,12 @@ public class WireFireTeleOp extends LinearOpMode {
 
     //Create Variables for Servo
     double intakeHandRotation = 0.0;
-    double ServoHandIncrement = 0.0000003;
+    double ServoHandIncrement = 0.004;
     final double MAX_INTAKEHAND_ROTATION = 0.20;
     final double MIN_INTAKEHAND_ROTATION = 0;
 
     double intakeWristRotation = 0.0;
-    double ServoWristIncrement = 0.05;
+    double ServoWristIncrement = 0.025;
     final double MAX_INTAKEWRIST_ROTATION = 0.9;
     final double MIN_INTAKEWRIST_ROTATION = 0.2;
 

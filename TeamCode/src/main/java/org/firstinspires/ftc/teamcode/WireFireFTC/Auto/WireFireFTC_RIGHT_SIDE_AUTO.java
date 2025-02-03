@@ -69,7 +69,7 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         }
         movement(0.90,1.0,0.0,0.0);
         stopMotors();
-        movement(1.25, 0.0, 2.0, 0.0);
+        movement(1.25, 0.0, -2.0, 0.0);
         stopMotors();
         height = 3260;
         setSlides(1.5, height, 0.7);
