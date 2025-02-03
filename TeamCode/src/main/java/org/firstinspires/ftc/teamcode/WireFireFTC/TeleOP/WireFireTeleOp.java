@@ -24,19 +24,19 @@ public class WireFireTeleOp extends LinearOpMode {
 
     //Create Variables for slides
     int height = 0;
-    final double HEIGHT_INCREMENT = 50;
+    final double HEIGHT_INCREMENT = 25;
     final int MAX_HEIGHT = 4000;
     final int ADJUSTED_MAX_HEIGHT = 4500;
     final int MIN_HEIGHT = 0;
 
     //Create Variables for Servo
     double intakeHandRotation = 0.0;
-    double ServoHandIncrement = 0.004;
+    double ServoHandIncrement = 0.025;
     final double MAX_INTAKEHAND_ROTATION = 0.20;
     final double MIN_INTAKEHAND_ROTATION = 0;
 
     double intakeWristRotation = 0.0;
-    double ServoWristIncrement = 0.025;
+    double ServoWristIncrement = 0.005;
     final double MAX_INTAKEWRIST_ROTATION = 0.9;
     final double MIN_INTAKEWRIST_ROTATION = 0.2;
 
@@ -208,7 +208,7 @@ public class WireFireTeleOp extends LinearOpMode {
                 intakeWristRotation = 0.84;
                 setWristRotation(intakeWristRotation);
                 sleep(250);
-                rotation = 650;
+                rotation = 800;
                 setSlidesrotation(rotation, 0.3);
             }
             else if (gamepad2.dpad_down) { //retract
