@@ -12,9 +12,6 @@ public class WireFireFTC_LEFTSIDE_AUTO extends LinearOpMode {
     //Used for Telemetry
     private ElapsedTime runtime = new ElapsedTime();
 
-    //Used to keep power
-    double PWR_MULTIPLIER = 0.77;
-
     //Create Variables for rotating slides
     int rotation = 0;
 
@@ -44,7 +41,7 @@ public class WireFireFTC_LEFTSIDE_AUTO extends LinearOpMode {
         initializeMotors();
         intializeServo();
         waitForStart();
-        movement(1.25, 0.0, 2.0, 0.0);
+        movement(1.25, 0.0, -2.0, 0.0);
         stopMotors();
         rotation = 0;
         setSlidesrotation(rotation,1.0);

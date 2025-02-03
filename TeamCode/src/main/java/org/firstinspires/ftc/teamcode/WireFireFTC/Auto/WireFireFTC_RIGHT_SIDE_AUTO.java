@@ -46,12 +46,13 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         setWristRotation(intakeWristRotation);
         intakeHandRotation = 0.0;
         setIntakeHand(intakeHandRotation);
-        movement(0.6,0.0,1.0,0.0);
+        movement(0.65,0.0,1.0,0.0);
         movement( 0.65, 0.0, 0.0, -0.6);
         movement( 1.0, 0.0, 1.0, 0.0);
         stopMotors();
         for(int i = 0; i < 3; i++) {
-        movement(0.5, 0.5, 0.0, 0.0);
+        movement(0.3, 0.5, 0.0, 0.0);
+        stopMotors();
         movement(0.8, 0.0, -1.0, 0.0);
 
         }
