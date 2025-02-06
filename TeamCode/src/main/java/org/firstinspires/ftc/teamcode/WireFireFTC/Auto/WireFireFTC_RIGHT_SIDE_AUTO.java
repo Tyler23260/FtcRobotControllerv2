@@ -44,51 +44,77 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         //Start of autonomous
         intakeHandRotation = 0.0;
         setIntakeHand(intakeHandRotation);
-        sleep(500);
+        sleep(200);
         intakeWristRotation = 0.9;
         setWristRotation(intakeWristRotation);
-        sleep(1000);
-        movement(0.65,0.0,1.0,0.0);
-        movement( 0.62, 0.0, 0.0, -0.6);
-        movement( 1.0, 0.0, 1.0, 0.0);
+        sleep(200);
+        movement(0.6,0.0,1.0,0.0);
         stopMotors();
-        sleep(250);
-        movement(0.4, 0.6, 0.0, 0.0);
+        movement(0.25,-0.7,0.0,0.0);
         stopMotors();
-        sleep(250);
-        movement( 0.2, 0.0, 0.0, 0.3);
+        movement(0.55, 0.0, 0.0, -0.6);
         stopMotors();
-        sleep(500);
-        movement(0.92, 0.0, -1.0, 0.0);
+        movement( 0.97, 0.0, 1.0, 0.0);
         stopMotors();
-        sleep(500);
-        movement(0.4,-0.5,0.0,0.0);
+        sleep(160);
+        movement(0.3, 0.5, 0.0, 0.0);
         stopMotors();
-        sleep(500);
-        movement(0.92, 0.0, 1.0, 0.0);
+        sleep(160);
+        movement(0.1,0.0,0.0,0.3);
         stopMotors();
-        sleep(500);
-        movement(0.2, 0.6, 0.0, 0.0);
+        sleep(160);
+        movement(1.1, 0.0, -1.0, 0.1);
         stopMotors();
-        sleep(250);
-        movement( 0.2, 0.0, 0.0, 0.3);
+        sleep(160);
+        movement(0.3,-0.5,0.0,0.0);
         stopMotors();
-        sleep(500);
-        movement(0.92, 0.0, -1.0, 0.0);
+        sleep(160);
+        movement(0.98, 0.0, 1.0, -0.1);
         stopMotors();
-        sleep(500);
-        movement(0.4,-0.5,0.0,0.0);
+        sleep(160);
+        movement(0.27, 0.6, 0.0, 0.0);
         stopMotors();
-        sleep(500);
-        movement(0.2, 0.6, 0.0, 0.0);
+        sleep(160);
+        movement(0.1,0.0,0.0,0.3);
         stopMotors();
-        sleep(500);
-        movement(0.92, 0.0, -1.0, 0.0);
+        sleep(160);
+        movement(1.1, 0.0, -1.0, 0.1);
         stopMotors();
-        sleep(500);
-        movement(0.4,-0.5,0.0,0.0);
+        sleep(160);
+        movement(0.2,-0.5,0.0,0.0);
         stopMotors();
-        sleep(500);
+        sleep(160);
+        movement(0.98, 0.0, 1.0, -0.2);
+        stopMotors();
+        sleep(160);
+        movement(0.29, 0.6, 0.0, 0.0);
+        stopMotors();
+        sleep(160);
+        movement(0.1,0.0,0.0,0.3);
+        stopMotors();
+        sleep(160);
+        movement(1.1, 0.0, -1.0, 0.1);
+        stopMotors();
+        sleep(160);
+        movement(0.35,-0.5,0.0,0.0);
+        stopMotors();
+        sleep(160);
+        /*movement(0.1, 0.0, 1.0, -0.1);
+        stopMotors();
+        sleep(160);
+        movement(0.55, 0.0, 0.0, -0.6);
+        stopMotors();
+        sleep(160);
+        movement(0.15,0.0,1.0,0.0);
+        stopMotors();
+        intakeWristRotation = 0.52;
+        setWristRotation(intakeWristRotation);
+        rotation = 390;
+        setSlidesrotation(rotation, 1.0);
+        sleep(150);
+        movement(0.15, -0.6, 0.0, 0.0);
+        stopMotors();
+        sleep(10000);*/
     }
 
     // Method to initialize the motors
@@ -106,6 +132,22 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         backleft.setDirection(DcMotor.Direction.REVERSE);
         frontright.setDirection(DcMotor.Direction.FORWARD);
         backright.setDirection(DcMotor.Direction.FORWARD);
+
+        //Change RunMode
+        slidesrotation.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        slide_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slide_motor.setDirection(DcMotor.Direction.REVERSE);
+
+        slide_motor.setTargetPosition(0);
+        slidesrotation.setTargetPosition(0);
+
+        //Setting modes and ZeroPower
+        slide_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        slide_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slidesrotation.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slidesrotation.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     private void initializeServo() {
