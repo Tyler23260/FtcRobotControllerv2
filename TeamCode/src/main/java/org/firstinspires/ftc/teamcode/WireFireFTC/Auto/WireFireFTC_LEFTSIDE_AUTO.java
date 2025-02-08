@@ -12,6 +12,9 @@ public class WireFireFTC_LEFTSIDE_AUTO extends LinearOpMode {
     //Used for Telemetry
     private ElapsedTime runtime = new ElapsedTime();
 
+    //Used to keep power
+    double PWR_MULTIPLIER = 0.77;
+
     //Create Variables for rotating slides
     int rotation = 0;
 
@@ -39,28 +42,18 @@ public class WireFireFTC_LEFTSIDE_AUTO extends LinearOpMode {
     @Override
     public void runOpMode() {
         initializeMotors();
-        intializeServo();
         waitForStart();
-        movement(1.25, 0.0, -2.0, 0.0);
+        movement(0.35, 0.0, -0.5, 0.0);
         stopMotors();
-        rotation = 0;
-        setSlidesrotation(rotation,1.0);
-        movement(0.1, 0.0, 0.0, -1.0);
-        intakeWristRotation = 0.2;
-        setWristRotation(intakeWristRotation);
-        intakeHandRotation = 0.5;
-        setIntakeHand(intakeHandRotation);
-        height = 3200;
-        setSlides(height,1.0);
+        movement(1.7, -0.5, 0.0, 0.0);
+        stopMotors();
+        movement(0.5, 0.0, 0.5, -0.5);
+        stopMotors();
+        movement(0.5, 0.5, 0.0, 0.0);
+        stopMotors();
+        rotation = 1335;
+        setSlidesrotation(rotation, 1.0);
         sleep(1000);
-        intakeHandRotation = 0.0;
-        rotation = 1300;
-        setSlidesrotation(rotation, 0.3);
-        sleep(1000);
-        height = 4500;
-        setSlides(height, 0.7);
-        intakeWristRotation = 0.38;
-        setWristRotation(intakeWristRotation);
     }
 
     // Method to initialize the motors
@@ -78,15 +71,28 @@ public class WireFireFTC_LEFTSIDE_AUTO extends LinearOpMode {
         backleft.setDirection(DcMotor.Direction.REVERSE);
         frontright.setDirection(DcMotor.Direction.FORWARD);
         backright.setDirection(DcMotor.Direction.FORWARD);
+
+        //Change RunMode
+        slidesrotation.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        slide_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slide_motor.setDirection(DcMotor.Direction.REVERSE);
+
+        slide_motor.setTargetPosition(0);
+        slidesrotation.setTargetPosition(0);
+
+        //Setting modes and ZeroPower
+        slide_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        slide_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slidesrotation.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slidesrotation.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     private void intializeServo() {
         //Initialize the Servos
         wristRotation = hardwareMap.get(Servo.class, "wristServo");
         intakeHand = hardwareMap.get(Servo.class, "intakeServo");
-
-        wristRotation.setDirection(Servo.Direction.REVERSE);
-        intakeHand.setDirection(Servo.Direction.REVERSE);
     }
 
     // Method to stop the motors

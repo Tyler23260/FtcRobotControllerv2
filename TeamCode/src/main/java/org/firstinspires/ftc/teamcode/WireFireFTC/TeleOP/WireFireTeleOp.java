@@ -26,7 +26,7 @@ public class WireFireTeleOp extends LinearOpMode {
     int height = 0;
     final double HEIGHT_INCREMENT = 25;
     final int MAX_HEIGHT = 4000;
-    final int ADJUSTED_MAX_HEIGHT = 4500;
+    final int ADJUSTED_MAX_HEIGHT = 4600;
     final int MIN_HEIGHT = 0;
 
     //Create Variables for Servo
@@ -122,12 +122,12 @@ public class WireFireTeleOp extends LinearOpMode {
 
             //Used for Slides_Motor see slide code for details
             if(gamepad2.left_stick_y > 0.03) {
-                rotation -= INCREMENT;
+                rotation += INCREMENT;
                 rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
                 setSlidesrotation(rotation, 1.0);
             }
             else if (gamepad2.left_stick_y < -0.03) {
-                rotation += INCREMENT;
+                rotation -= INCREMENT;
                 rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
                 setSlidesrotation(rotation, 1.0);
             }
@@ -188,7 +188,7 @@ public class WireFireTeleOp extends LinearOpMode {
                 rotation = 1300;
                 setSlidesrotation(rotation, 0.3);
                 sleep(1000);
-                height = 4500;
+                height = 4550;
                 setSlides(height, 0.7);
                 intakeWristRotation = 0.38;
                 setWristRotation(intakeWristRotation);
@@ -208,7 +208,7 @@ public class WireFireTeleOp extends LinearOpMode {
                 intakeWristRotation = 0.84;
                 setWristRotation(intakeWristRotation);
                 sleep(250);
-                rotation = 800;
+                rotation = 700;
                 setSlidesrotation(rotation, 0.3);
             }
             else if (gamepad2.dpad_down) { //retract
@@ -220,11 +220,28 @@ public class WireFireTeleOp extends LinearOpMode {
                 intakeWristRotation = 0.2;
                 setWristRotation(intakeWristRotation);
             }
-            else if (gamepad2.x){ //To reset auto Left
-
+            else if (gamepad2.x) {
+                intakeHandRotation = 0.2;
+                setIntakeHand(intakeHandRotation);
+                intakeWristRotation = 0.5;
+                setWristRotation(intakeWristRotation);
+                rotation = 700;
+                setSlidesrotation(rotation, 0.5);
+            }
+            else if (gamepad1.back){//To reset auto Left
+                rotation = -1335;
+                setSlidesrotation(rotation, 1.0);
+                sleep(750);
+                slidesrotation.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                slidesrotation.setTargetPosition(0);
+                rotation = 0;
             }
             else if(gamepad2.b){ //To reset auto Right
 
+            }
+
+            if(gamepad1.back) {
+                stop();
             }
 
 
