@@ -12,11 +12,14 @@ import org.firstinspires.ftc.teamcode.WireFireFTC.Robot.WireFireRobotClass;
 
 @TeleOp(name = "Testing-TeleOp", group = "Linear OpMode")
 public class Testing_TeleOp extends LinearOpMode {
+    WireFireRobotClass robot = new WireFireRobotClass(this);
     //Used for Telemetry
     private ElapsedTime runtime = new ElapsedTime();
 
-    //Used to keep power
-    double PWR_MULTIPLIER = 0.90;
+    //Power Multipliers
+    final double SAFE_DRIVE_SPEED = 0.9;
+    final double SAFE_STRAFE_SPEED = 0.9;
+    final double SAFE_TURN_SPEED = 0.85;
 
     //Create Variables for rotating slides
     int rotation = 0;
@@ -90,6 +93,10 @@ public class Testing_TeleOp extends LinearOpMode {
 
         wristRotation.setDirection(Servo.Direction.REVERSE);
         intakeHand.setDirection(Servo.Direction.REVERSE);
+
+        while(opModeInInit()) {
+            telemetry.addData(">", "Touch Play to Drive");
+        }
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
@@ -224,36 +231,24 @@ public class Testing_TeleOp extends LinearOpMode {
 
 
             // Get gamepad inputs
-            double drive = -gamepad1.left_stick_y; // Forward/backward movement
-            double strafe = gamepad1.left_stick_x;  // Left/right movement
-            double turn = gamepad1.right_stick_x;   // Turn left/right
+            double drive = -gamepad1.left_stick_y * SAFE_DRIVE_SPEED; // Forward/backward movement
+            double strafe = gamepad1.left_stick_x * SAFE_STRAFE_SPEED;  // Left/right movement
+            double turn = gamepad1.right_stick_x * SAFE_TURN_SPEED; // Turn left/right
 
-            // Calculate motor powers
-            double frontLeftPower = drive + strafe + turn;
-            double frontRightPower = drive - strafe - turn;
-            double backLeftPower = drive - strafe + turn;
-            double backRightPower = drive + strafe - turn;
-
-            // Normalize motor powers to stay within the range of -1 to 1
-            double maxPower = Math.max(Math.abs(frontLeftPower), Math.max(Math.abs(frontRightPower),
-                    Math.max(Math.abs(backLeftPower), Math.abs(backRightPower))));
-            if (maxPower > 1) {
-                frontLeftPower /= maxPower;
-                frontRightPower /= maxPower;
-                backLeftPower /= maxPower;
-                backRightPower /= maxPower;
+            if(gamepad1.dpad_up){
+                drive = SAFE_DRIVE_SPEED / 2.0;
+            } else if(gamepad1.dpad_down) {
+                drive = -SAFE_DRIVE_SPEED / 2.0;
+            } else if(gamepad1.dpad_left) {
+                strafe = -SAFE_STRAFE_SPEED / 2.0;
+            } else if(gamepad1.dpad_right) {
+                strafe = SAFE_STRAFE_SPEED / 2.0;
             }
 
-            // Set motor powers
-            frontleft.setPower(frontLeftPower*PWR_MULTIPLIER);
-            frontright.setPower(frontRightPower*PWR_MULTIPLIER);
-            backleft.setPower(backLeftPower*PWR_MULTIPLIER);
-            backright.setPower(backRightPower*PWR_MULTIPLIER);
+            robot.moveRobot(drive, strafe, turn);
 
             // Optional telemetry
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
-            telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftPower, backRightPower);
             telemetry.addData("Height:", height);
             telemetry.addData("Slide Ticks:", slide_motor.getCurrentPosition());
             telemetry.addData("Rotation:", rotation);
@@ -262,12 +257,6 @@ public class Testing_TeleOp extends LinearOpMode {
             telemetry.addData("WristRotation", wristRotation.getPosition());
             telemetry.addData("WristServoRotation", intakeWristRotation);
             telemetry.update();
-
-            // Stop all motors when op mode is stopped
-            frontleft.setPower(0);
-            frontright.setPower(0);
-            backleft.setPower(0);
-            backright.setPower(0);
         }
     }
 

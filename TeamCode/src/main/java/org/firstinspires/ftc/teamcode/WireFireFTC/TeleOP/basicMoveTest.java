@@ -39,9 +39,9 @@ public class basicMoveTest extends LinearOpMode {
             } else if(gamepad1.dpad_down) {
                 drive = -SAFE_DRIVE_SPEED / 2.0;
             } else if(gamepad1.dpad_left) {
-                strafe = SAFE_STRAFE_SPEED / 2.0;
-            } else if(gamepad1.dpad_right) {
                 strafe = -SAFE_STRAFE_SPEED / 2.0;
+            } else if(gamepad1.dpad_right) {
+                strafe = SAFE_STRAFE_SPEED / 2.0;
             }
 
             robot.moveRobot(drive, strafe, turn);
