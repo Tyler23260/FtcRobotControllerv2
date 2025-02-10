@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.WireFireFTC.Robot.WireFireRobotClass;
+
 @TeleOp(name = "Testing-TeleOp", group = "Linear OpMode")
 public class Testing_TeleOp extends LinearOpMode {
     //Used for Telemetry
@@ -135,24 +137,24 @@ public class Testing_TeleOp extends LinearOpMode {
             //Code for Slides using values to determine how long for the motors to be set until it reaches Target Position
             if(rotation < 1150) {
                 if (gamepad2.right_stick_y > 0.0) {
-                    height += HEIGHT_INCREMENT;
+                    height -= HEIGHT_INCREMENT;
                     height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
                     setSlides(height, 1.0);
                 }
                 else if (gamepad2.right_stick_y < 0.0) {
-                    height -= HEIGHT_INCREMENT;
+                    height += HEIGHT_INCREMENT;
                     height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
                     setSlides(height, 1.0);
                 }
             }
             else if(rotation > 1150){
                 if (gamepad2.right_stick_y > 0.0) {
-                    height += HEIGHT_INCREMENT;
+                    height -= HEIGHT_INCREMENT;
                     height = Math.max(MIN_HEIGHT, Math.min(ADJUSTED_MAX_HEIGHT, height));
                     setSlides(height, 1.0);
                 }
                 else if (gamepad2.right_stick_y < 0.0) {
-                    height -= HEIGHT_INCREMENT;
+                    height += HEIGHT_INCREMENT;
                     height = Math.max(MIN_HEIGHT, Math.min(ADJUSTED_MAX_HEIGHT, height));
                     setSlides(height, 1.0);
                 }
@@ -222,15 +224,15 @@ public class Testing_TeleOp extends LinearOpMode {
 
 
             // Get gamepad inputs
-            double forward = -gamepad1.left_stick_y; // Forward/backward movement
+            double drive = -gamepad1.left_stick_y; // Forward/backward movement
             double strafe = gamepad1.left_stick_x;  // Left/right movement
             double turn = gamepad1.right_stick_x;   // Turn left/right
 
             // Calculate motor powers
-            double frontLeftPower = forward + strafe + turn;
-            double frontRightPower = forward - strafe - turn;
-            double backLeftPower = forward - strafe + turn;
-            double backRightPower = forward + strafe - turn;
+            double frontLeftPower = drive + strafe + turn;
+            double frontRightPower = drive - strafe - turn;
+            double backLeftPower = drive - strafe + turn;
+            double backRightPower = drive + strafe - turn;
 
             // Normalize motor powers to stay within the range of -1 to 1
             double maxPower = Math.max(Math.abs(frontLeftPower), Math.max(Math.abs(frontRightPower),

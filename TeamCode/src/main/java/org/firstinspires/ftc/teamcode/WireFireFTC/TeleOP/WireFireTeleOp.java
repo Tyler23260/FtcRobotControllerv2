@@ -26,7 +26,7 @@ public class WireFireTeleOp extends LinearOpMode {
     int height = 0;
     final double HEIGHT_INCREMENT = 25;
     final int MAX_HEIGHT = 4000;
-    final int ADJUSTED_MAX_HEIGHT = 4600;
+    final int ADJUSTED_MAX_HEIGHT = 4500;
     final int MIN_HEIGHT = 0;
 
     //Create Variables for Servo
@@ -122,12 +122,12 @@ public class WireFireTeleOp extends LinearOpMode {
 
             //Used for Slides_Motor see slide code for details
             if(gamepad2.left_stick_y > 0.03) {
-                rotation += INCREMENT;
+                rotation -= INCREMENT;
                 rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
                 setSlidesrotation(rotation, 1.0);
             }
             else if (gamepad2.left_stick_y < -0.03) {
-                rotation -= INCREMENT;
+                rotation += INCREMENT;
                 rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
                 setSlidesrotation(rotation, 1.0);
             }
@@ -188,27 +188,27 @@ public class WireFireTeleOp extends LinearOpMode {
                 rotation = 1300;
                 setSlidesrotation(rotation, 0.3);
                 sleep(1000);
-                height = 4550;
-                setSlides(height, 1.0);
+                height = 4500;
+                setSlides(height, 0.7);
                 intakeWristRotation = 0.38;
                 setWristRotation(intakeWristRotation);
             }
             else if(gamepad2.dpad_right){ //for the human player
                 height = 1640;
-                setSlides(height, 1.0);
+                setSlides(height, 0.7);
                 intakeWristRotation = 0.52;
                 setWristRotation(intakeWristRotation);
-                rotation = 385;
+                rotation = 393;
                 setSlidesrotation(rotation, 0.3);
 
             }
             else if(gamepad2.dpad_left) { //for the specimens on the bar
                 height = 3260;
-                setSlides(height, 1.0);
+                setSlides(height, 0.7);
                 intakeWristRotation = 0.84;
                 setWristRotation(intakeWristRotation);
                 sleep(250);
-                rotation = 700;
+                rotation = 800;
                 setSlidesrotation(rotation, 0.3);
             }
             else if (gamepad2.dpad_down) { //retract
@@ -220,41 +220,24 @@ public class WireFireTeleOp extends LinearOpMode {
                 intakeWristRotation = 0.2;
                 setWristRotation(intakeWristRotation);
             }
-            else if (gamepad2.x) {
-                intakeHandRotation = 0.2;
-                setIntakeHand(intakeHandRotation);
-                intakeWristRotation = 0.5;
-                setWristRotation(intakeWristRotation);
-                rotation = 700;
-                setSlidesrotation(rotation, 0.5);
-            }
-            else if (gamepad1.back){//To reset auto Left
-                rotation = -1335;
-                setSlidesrotation(rotation, 1.0);
-                sleep(750);
-                slidesrotation.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                slidesrotation.setTargetPosition(0);
-                rotation = 0;
+            else if (gamepad2.x){ //To reset auto Left
+
             }
             else if(gamepad2.b){ //To reset auto Right
 
             }
 
-            if(gamepad1.back) {
-                stop();
-            }
-
 
             // Get gamepad inputs
-            double forward = -gamepad1.left_stick_y; // Forward/backward movement
+            double drive = -gamepad1.left_stick_y; // Forward/backward movement
             double strafe = gamepad1.left_stick_x;  // Left/right movement
-            double turn = gamepad1.right_stick_x * 0.85;   // Turn left/right
+            double turn = gamepad1.right_stick_x;   // Turn left/right
 
             // Calculate motor powers
-            double frontLeftPower = forward + strafe + turn;
-            double frontRightPower = forward - strafe - turn;
-            double backLeftPower = forward - strafe + turn;
-            double backRightPower = forward + strafe - turn;
+            double frontLeftPower = drive + strafe + turn;
+            double frontRightPower = drive - strafe - turn;
+            double backLeftPower = drive - strafe + turn;
+            double backRightPower = drive + strafe - turn;
 
             // Normalize motor powers to stay within the range of -1 to 1
             double maxPower = Math.max(Math.abs(frontLeftPower), Math.max(Math.abs(frontRightPower),
