@@ -189,22 +189,22 @@ public class WireFireTeleOp extends LinearOpMode {
                 setSlidesrotation(rotation, 0.3);
                 sleep(1000);
                 height = 4550;
-                setSlides(height, 0.7);
+                setSlides(height, 1.0);
                 intakeWristRotation = 0.38;
                 setWristRotation(intakeWristRotation);
             }
             else if(gamepad2.dpad_right){ //for the human player
                 height = 1640;
-                setSlides(height, 0.7);
+                setSlides(height, 1.0);
                 intakeWristRotation = 0.52;
                 setWristRotation(intakeWristRotation);
-                rotation = 393;
+                rotation = 385;
                 setSlidesrotation(rotation, 0.3);
 
             }
             else if(gamepad2.dpad_left) { //for the specimens on the bar
                 height = 3260;
-                setSlides(height, 0.7);
+                setSlides(height, 1.0);
                 intakeWristRotation = 0.84;
                 setWristRotation(intakeWristRotation);
                 sleep(250);
@@ -248,7 +248,7 @@ public class WireFireTeleOp extends LinearOpMode {
             // Get gamepad inputs
             double forward = -gamepad1.left_stick_y; // Forward/backward movement
             double strafe = gamepad1.left_stick_x;  // Left/right movement
-            double turn = gamepad1.right_stick_x;   // Turn left/right
+            double turn = gamepad1.right_stick_x * 0.85;   // Turn left/right
 
             // Calculate motor powers
             double frontLeftPower = forward + strafe + turn;
