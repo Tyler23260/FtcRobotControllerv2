@@ -232,7 +232,13 @@ public class WireFireTeleOp extends LinearOpMode {
                 setWristRotation(intakeWristRotation);
             }
             else if (gamepad2.x){ //To reset auto Left
-
+                intakeWristRotation = 0.9;
+                setWristRotation(intakeWristRotation);
+                rotation = 1300;
+                setSlidesrotation(rotation, 1.0);
+                sleep(250);
+                height = 2000;
+                setSlides(height, 1.0);
             }
             else if(gamepad2.b){ //To reset auto Right
 
