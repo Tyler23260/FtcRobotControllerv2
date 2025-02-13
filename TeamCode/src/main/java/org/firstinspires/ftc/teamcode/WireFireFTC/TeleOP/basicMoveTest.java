@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.WireFireFTC.Robot.WireFireRobotClass;
 
-@TeleOp(name = "Testing-TeleOp", group = "Linear OpMode")
+@TeleOp(name = "BasicMoveTest", group = "Linear OpMode")
 public class basicMoveTest extends LinearOpMode {
     WireFireRobotClass robot = new WireFireRobotClass(this);
 
@@ -25,7 +25,7 @@ public class basicMoveTest extends LinearOpMode {
         robot.initialize(true);
 
         while(opModeInInit()) {
-            telemetry.addData(">", "Touch Play to Drive");
+            telemetry.addData("This is the basic move test, a test teleop mode", "Touch Play to Drive");
         }
 
         while(opModeIsActive()) {
