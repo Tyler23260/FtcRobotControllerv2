@@ -1,11 +1,37 @@
 package org.firstinspires.ftc.teamcode.WireFireFTC.Robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class WireFireRobotClass {
+public class WireFireRobotClass{
+    //Create Variables for rotating slides
+    int rotation = 0;
+    final int INCREMENT = 7;
+    final int MAX_ROTATION = 1400;
+    final int MIN_ROTATION = 0;
+
+    //Create Variables for slides
+    int height = 0;
+    final int HEIGHT_INCREMENT = 50;
+    final int MAX_HEIGHT = 4000;
+    final int ADJUSTED_MAX_HEIGHT = 4500;
+    final int MIN_HEIGHT = 0;
+
+    //Create Variables for Servo
+    double intakeHandRotation = 0.0;
+    double ServoHandIncrement = 0.04;
+    final double MAX_INTAKEHAND_ROTATION = 0.20;
+    final double MIN_INTAKEHAND_ROTATION = 0;
+
+    double intakeWristRotation = 0.0;
+    double ServoWristIncrement = 0.04;
+    final double MAX_INTAKEWRIST_ROTATION = 0.9;
+    final double MIN_INTAKEWRIST_ROTATION = 0.2;
+
     //Create the objects for motors
     private DcMotor frontleft = null;
     private DcMotor frontright = null;
@@ -37,11 +63,12 @@ public class WireFireRobotClass {
 
         slidesrotation = setupSlidesMotor("rotation_motor", DcMotor.Direction.FORWARD);
         slide_motor = setupSlidesMotor("slide_motor", DcMotor.Direction.REVERSE);
-
+        //Servo/device must match the names assigned during the robot configuration
         wristRotation = setupServo("wristServo", Servo.Direction.REVERSE);
         intakeHand = setupServo("intakeServo", Servo.Direction.REVERSE);
     }
 
+    //Setups the Drive Motor As Well As Setting Direction
     private DcMotor setupDriveMotor(String deviceName, DcMotor.Direction direction) {
         DcMotor aMotor = myOpMode.hardwareMap.get(DcMotor.class, deviceName);
         aMotor.setDirection(direction);
@@ -51,6 +78,7 @@ public class WireFireRobotClass {
         return aMotor;
     }
 
+    //Setups the Slide Motor As Well As Setting Direction
     private DcMotor setupSlidesMotor(String deviceName, DcMotor.Direction direction) {
         DcMotor aMotor = myOpMode.hardwareMap.get(DcMotor.class, deviceName);
         aMotor.setDirection(direction);
@@ -62,12 +90,14 @@ public class WireFireRobotClass {
         return aMotor;
     }
 
+    //Setups the Servos As Well As Setting Direction
     private Servo setupServo(String deviceName, Servo.Direction direction) {
         Servo aServo = myOpMode.hardwareMap.get(Servo.class, deviceName);
         aServo.setDirection(direction);
         return aServo;
     }
 
+    //Used for Driving robot
     public void moveRobot(double drive, double strafe, double turn) {
         // Calculate motor powers
         double fL = drive + strafe + turn;
@@ -96,29 +126,104 @@ public class WireFireRobotClass {
         }
     }
 
+    //Stops the Robot Movement
     public void stopRobot() {
         moveRobot(0.0,0.0,0.0);
     }
 
+    //Go to the op Function
     public void showTelemetry(boolean show) {
         showTelemetry = show;
     }
 
+    //For Slide Rotation
+    public void SlidesRotation(boolean t) {
+        if(t){
+            rotation += INCREMENT;
+            rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
+            setSlidesrotation(rotation, 1.0);
+        } else{
+            rotation -= INCREMENT;
+            rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
+            setSlidesrotation(rotation, 1.0);
+        }
+    }
+
+    //For Slides
+    public void Slides(boolean t){
+        if(t){
+            height += HEIGHT_INCREMENT;
+            height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
+            setSlides(height, 1.0);
+        } else{
+            height -= HEIGHT_INCREMENT;
+            height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
+            setSlides(height, 1.0);
+        }
+    }
+
+    //For Slides Adjusted Height
+    public void SlidesAdjusted(boolean t){
+        if(t){
+            height += HEIGHT_INCREMENT;
+            height = Math.max(MIN_HEIGHT, Math.min(ADJUSTED_MAX_HEIGHT, height));
+            setSlides(height, 1.0);
+        } else{
+            height -= HEIGHT_INCREMENT;
+            height = Math.max(MIN_HEIGHT, Math.min(ADJUSTED_MAX_HEIGHT, height));
+            setSlides(height, 1.0);
+        }
+    }
+
+    //For Claw
+    public void Claw(boolean t){
+        if (t) {
+            intakeHandRotation += ServoHandIncrement;
+            intakeHandRotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
+            setIntakeHand(intakeHandRotation);
+        } else {
+            intakeHandRotation = 0.0;
+            setIntakeHand(intakeHandRotation);
+        }
+    }
+
+    //For Wrist
+    public void Wrist(boolean t) {
+        if (t) {
+            intakeWristRotation += ServoWristIncrement;
+            intakeWristRotation = Math.max(MIN_INTAKEWRIST_ROTATION, Math.min(MAX_INTAKEWRIST_ROTATION, intakeWristRotation));
+            setWristRotation(intakeWristRotation);
+        } else{
+            intakeWristRotation -= ServoWristIncrement;
+            intakeWristRotation = Math.max(MIN_INTAKEWRIST_ROTATION, Math.min(MAX_INTAKEWRIST_ROTATION, intakeWristRotation));
+            setWristRotation(intakeWristRotation);
+        }
+
+    }
+
+    //For Slide Rotation Movement
     public void setSlidesrotation(int rot, double pow) {
+        rotation = rot;
         slidesrotation.setTargetPosition(rot);
         slidesrotation.setPower(pow);
     }
 
+    //For Slide Movement
     public void setSlides(int Height, double pow) {
+        height = Height;
         slide_motor.setTargetPosition(Height);
         slide_motor.setPower(pow);
     }
 
+    //For Claw Movement
     public void setIntakeHand(double hand){
+        intakeHandRotation = hand;
         intakeHand.setPosition(hand);
     }
 
+    //For Wrist Movement
     public void setWristRotation(double wrist){
+        intakeWristRotation = wrist;
         wristRotation.setPosition(wrist);
     }
 }

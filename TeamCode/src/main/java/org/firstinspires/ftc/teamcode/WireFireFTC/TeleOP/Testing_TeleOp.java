@@ -23,27 +23,14 @@ public class Testing_TeleOp extends LinearOpMode {
 
     //Create Variables for rotating slides
     int rotation = 0;
-    final int INCREMENT = 7;
-    final int MAX_ROTATION = 1400;
-    final int MIN_ROTATION = 0;
 
     //Create Variables for slides
     int height = 0;
-    final double HEIGHT_INCREMENT = 50;
-    final int MAX_HEIGHT = 4000;
-    final int ADJUSTED_MAX_HEIGHT = 4500;
-    final int MIN_HEIGHT = 0;
 
     //Create Variables for Servo
     double intakeHandRotation = 0.0;
-    double ServoHandIncrement = 0.04;
-    final double MAX_INTAKEHAND_ROTATION = 0.20;
-    final double MIN_INTAKEHAND_ROTATION = 0;
 
     double intakeWristRotation = 0.0;
-    double ServoWristIncrement = 0.04;
-    final double MAX_INTAKEWRIST_ROTATION = 0.9;
-    final double MIN_INTAKEWRIST_ROTATION = 0.2;
 
     //Create the objects for sensors
     //private ColorSensor colorSensor = null;
@@ -67,58 +54,39 @@ public class Testing_TeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             //Used for Slides_Motor see slide code for details
             if (gamepad2.left_stick_y > 0.0) {
-                rotation -= INCREMENT;
-                rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
-                robot.setSlidesrotation(rotation, 1.0);
+                robot.SlidesRotation(false);
             } else if (gamepad2.left_stick_y < 0.0) {
-                rotation += INCREMENT;
-                rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
-                robot.setSlidesrotation(rotation, 1.0);
+                robot.SlidesRotation(true);
             }
 
             //Code for Slides using values to determine how long for the motors to be set until it reaches Target Position
             if (rotation < 1150) {
                 if (gamepad2.right_stick_y > 0.0) {
-                    height -= HEIGHT_INCREMENT;
-                    height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
-                    robot.setSlides(height, 1.0);
+                    robot.Slides(false);
                 } else if (gamepad2.right_stick_y < 0.0) {
-                    height += HEIGHT_INCREMENT;
-                    height = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, height));
-                    robot.setSlides(height, 1.0);
+                    robot.Slides(true);
                 }
             } else if (rotation > 1150) {
                 if (gamepad2.right_stick_y > 0.0) {
-                    height -= HEIGHT_INCREMENT;
-                    height = Math.max(MIN_HEIGHT, Math.min(ADJUSTED_MAX_HEIGHT, height));
-                    robot.setSlides(height, 1.0);
+                    robot.SlidesAdjusted(false);
                 } else if (gamepad2.right_stick_y < 0.0) {
-                    height += HEIGHT_INCREMENT;
-                    height = Math.max(MIN_HEIGHT, Math.min(ADJUSTED_MAX_HEIGHT, height));
-                    robot.setSlides(height, 1.0);
+                    robot.SlidesAdjusted(true);
                 }
             }
 
 
             //IntakeHand Servo
             if (gamepad2.right_trigger > 0.0) {
-                intakeHandRotation += ServoHandIncrement;
-                intakeHandRotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
-                robot.setIntakeHand(intakeHandRotation);
+                robot.Claw(true);
             } else {
-                intakeHandRotation = 0.0;
-                robot.setIntakeHand(intakeHandRotation);
+                robot.Claw(false);
             }
 
             //Wrist Servo
             if (gamepad2.left_bumper) {
-                intakeWristRotation -= ServoWristIncrement;
-                intakeWristRotation = Math.max(MIN_INTAKEWRIST_ROTATION, Math.min(MAX_INTAKEWRIST_ROTATION, intakeWristRotation));
-                robot.setWristRotation(intakeWristRotation);
+                robot.Wrist(false);
             } else if (gamepad2.right_bumper) {
-                intakeWristRotation += ServoWristIncrement;
-                intakeWristRotation = Math.max(MIN_INTAKEWRIST_ROTATION, Math.min(MAX_INTAKEWRIST_ROTATION, intakeWristRotation));
-                robot.setWristRotation(intakeWristRotation);
+                robot.Wrist(true);
             }
 
             //Preset
