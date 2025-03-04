@@ -37,7 +37,7 @@ public class Testing_TeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-
+        robot.initialize(true);
         while (opModeInInit()) {
             telemetry.addData(">", "Touch Play to Drive");
         }

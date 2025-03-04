@@ -21,7 +21,7 @@ public class WireFireTeleOp extends LinearOpMode {
     //Power Multipliers
     final double SAFE_DRIVE_SPEED = 0.9;
     final double SAFE_STRAFE_SPEED = 0.9;
-    final double SAFE_TURN_SPEED = 0.85;
+    final double SAFE_TURN_SPEED = 0.80;
 
     //Create Variables for rotating slides
     int rotation = 0;
@@ -65,6 +65,7 @@ public class WireFireTeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        robot.initialize(true);
         // Initialize the Motors
         frontleft = hardwareMap.get(DcMotor.class, "frontleft");
         frontright = hardwareMap.get(DcMotor.class, "frontright");
@@ -108,6 +109,7 @@ public class WireFireTeleOp extends LinearOpMode {
         waitForStart();
         slide_motor.setTargetPosition(0);
         slidesrotation.setTargetPosition(0);
+        robot.initialize(true);
         runtime.reset();
 
         // Main control loop
@@ -232,12 +234,14 @@ public class WireFireTeleOp extends LinearOpMode {
                 setWristRotation(intakeWristRotation);
             }
             else if (gamepad2.x){ //To reset auto Left
+                height = 950;
+                setSlides(height, 1.0);
                 intakeWristRotation = 0.9;
                 setWristRotation(intakeWristRotation);
                 rotation = 1300;
-                setSlidesrotation(rotation, 1.0);
+                setSlidesrotation(rotation, 0.78);
                 sleep(250);
-                height = 2000;
+                height = 1900;
                 setSlides(height, 1.0);
             }
             else if(gamepad2.b){ //To reset auto Right
