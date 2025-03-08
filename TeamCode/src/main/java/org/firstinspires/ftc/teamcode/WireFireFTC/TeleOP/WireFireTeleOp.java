@@ -19,9 +19,9 @@ public class WireFireTeleOp extends LinearOpMode {
     WireFireRobotClass robot = new WireFireRobotClass(this);
 
     //Power Multipliers
-    final double SAFE_DRIVE_SPEED = 0.9;
-    final double SAFE_STRAFE_SPEED = 0.9;
-    final double SAFE_TURN_SPEED = 0.80;
+    final double SAFE_DRIVE_SPEED = 0.95;
+    final double SAFE_STRAFE_SPEED = 0.83;
+    final double SAFE_TURN_SPEED = 0.83;
 
     //Create Variables for rotating slides
     int rotation = 0;
