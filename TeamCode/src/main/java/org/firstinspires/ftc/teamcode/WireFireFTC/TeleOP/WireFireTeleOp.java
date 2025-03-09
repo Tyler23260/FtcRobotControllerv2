@@ -33,7 +33,7 @@ public class WireFireTeleOp extends LinearOpMode {
     int height = 0;
     final double HEIGHT_INCREMENT = 25;
     final int MAX_HEIGHT = 4000;
-    final int ADJUSTED_MAX_HEIGHT = 4500;
+    final int ADJUSTED_MAX_HEIGHT = 5000;
     final int MIN_HEIGHT = 0;
 
     //Create Variables for Servo
@@ -201,7 +201,7 @@ public class WireFireTeleOp extends LinearOpMode {
                 rotation = 1300;
                 setSlidesrotation(rotation, 0.3);
                 sleep(1000);
-                height = 4500;
+                height = 5000;
                 setSlides(height, 0.7);
                 intakeWristRotation = 0.38;
                 setWristRotation(intakeWristRotation);

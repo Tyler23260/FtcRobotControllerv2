@@ -47,7 +47,9 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         sleep(200);
         intakeWristRotation = 0.9;
         setWristRotation(intakeWristRotation);
-        sleep(200);
+        movement(1.0, 0.0, 0.5, 0.0);
+
+        /*sleep(200);
         movement(0.6,0.0,1.0,0.0);
         stopMotors();
         movement(0.25,-0.7,0.0,0.0);
@@ -99,7 +101,7 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         movement(0.35,-0.5,0.0,0.0);
         stopMotors();
         sleep(160);
-        /*movement(0.1, 0.0, 1.0, -0.1);
+        movement(0.1, 0.0, 1.0, -0.1);
         stopMotors();
         sleep(160);
         movement(0.55, 0.0, 0.0, -0.6);
