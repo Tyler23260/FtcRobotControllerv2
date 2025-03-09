@@ -25,7 +25,7 @@ public class WireFireTeleOp extends LinearOpMode {
 
     //Create Variables for rotating slides
     int rotation = 0;
-    final int INCREMENT = 7;
+    final int ROTATION_INCREMENT = 7;
     final int MAX_ROTATION = 1400;
     final int MIN_ROTATION = 0;
 
@@ -135,12 +135,12 @@ public class WireFireTeleOp extends LinearOpMode {
 
             //Used for Slides_Motor see slide code for details
             if(gamepad2.left_stick_y > 0.03) {
-                rotation -= INCREMENT;
+                rotation -= ROTATION_INCREMENT;
                 rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
                 setSlidesrotation(rotation, 1.0);
             }
             else if (gamepad2.left_stick_y < -0.03) {
-                rotation += INCREMENT;
+                rotation += ROTATION_INCREMENT;
                 rotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, rotation));
                 setSlidesrotation(rotation, 1.0);
             }
