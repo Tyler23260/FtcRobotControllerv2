@@ -28,6 +28,7 @@ public class basicMoveTest extends LinearOpMode {
             telemetry.addData("This is the basic move test, a test teleop mode", "Touch Play to Drive");
         }
 
+        waitForStart();
         while(opModeIsActive()) {
             // Get gamepad inputs
             double drive = -gamepad1.left_stick_y * SAFE_DRIVE_SPEED; // Forward/backward movement

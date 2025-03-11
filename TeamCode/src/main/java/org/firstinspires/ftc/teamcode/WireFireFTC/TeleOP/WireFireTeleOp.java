@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.WireFireFTC.TeleOP;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -31,21 +30,21 @@ public class WireFireTeleOp extends LinearOpMode {
 
     //Create Variables for slides
     int height = 0;
-    final double HEIGHT_INCREMENT = 25;
+    final double HEIGHT_INCREMENT = 15;
     final int MAX_HEIGHT = 4000;
     final int ADJUSTED_MAX_HEIGHT = 5000;
     final int MIN_HEIGHT = 0;
 
     //Create Variables for Servo
-    double intakeHandRotation = 0.0;
-    double ServoHandIncrement = 0.025;
-    final double MAX_INTAKEHAND_ROTATION = 0.20;
-    final double MIN_INTAKEHAND_ROTATION = 0;
+    double clawRotation = 0.0;
+    double CLAW_INCREMENT = 0.025;
+    final double MAX_CLAW_ROTATION = 0.20;
+    final double MIN_CLAW_ROTATION = 0;
 
-    double intakeWristRotation = 0.0;
-    double ServoWristIncrement = 0.005;
-    final double MAX_INTAKEWRIST_ROTATION = 0.9;
-    final double MIN_INTAKEWRIST_ROTATION = 0.2;
+    double WristRotation = 0.0;
+    double WRIST_INCREMENT = 0.005;
+    final double MAX_WRIST_ROTATION = 0.9;
+    final double MIN_WRIST_ROTATION = 0.2;
 
     //Create the objects for motors
     private DcMotor frontleft = null;
@@ -67,10 +66,10 @@ public class WireFireTeleOp extends LinearOpMode {
     public void runOpMode() {
         robot.initialize(true);
         // Initialize the Motors
-        frontleft = hardwareMap.get(DcMotor.class, "frontleft");
-        frontright = hardwareMap.get(DcMotor.class, "frontright");
-        backleft = hardwareMap.get(DcMotor.class, "backleft");
-        backright = hardwareMap.get(DcMotor.class, "backright");
+        frontleft = hardwareMap.get(DcMotorEx.class, "par0");
+        backleft = hardwareMap.get(DcMotorEx.class, "backleft");
+        backright = hardwareMap.get(DcMotorEx.class, "perp");
+        frontright = hardwareMap.get(DcMotorEx.class, "par1");
 
         slidesrotation = hardwareMap.get(DcMotorEx.class, "rotation_motor");
         slide_motor = hardwareMap.get(DcMotor.class, "slide_motor");
@@ -128,7 +127,6 @@ public class WireFireTeleOp extends LinearOpMode {
             */
             //Setting modes and ZeroPower
             slide_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
             slide_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             slidesrotation.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             slidesrotation.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -174,26 +172,26 @@ public class WireFireTeleOp extends LinearOpMode {
 
             //IntakeHand Servo
             if(gamepad2.left_trigger > 0.0) {
-                intakeHandRotation -= ServoHandIncrement;
-                intakeHandRotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
-                setIntakeHand(intakeHandRotation);
+                clawRotation -= CLAW_INCREMENT;
+                clawRotation = Math.max(MIN_CLAW_ROTATION, Math.min(MAX_CLAW_ROTATION, clawRotation));
+                setIntakeHand(clawRotation);
             }
             else if(gamepad2.right_trigger > 0.0) {
-                intakeHandRotation += ServoHandIncrement;
-                intakeHandRotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
-                setIntakeHand(intakeHandRotation);
+                clawRotation += CLAW_INCREMENT;
+                clawRotation = Math.max(MIN_CLAW_ROTATION, Math.min(MAX_CLAW_ROTATION, clawRotation));
+                setIntakeHand(clawRotation);
             }
 
             //Wrist Servo
             if(gamepad2.left_bumper) {
-                intakeWristRotation -= ServoWristIncrement;
-                intakeWristRotation = Math.max(MIN_INTAKEWRIST_ROTATION, Math.min(MAX_INTAKEWRIST_ROTATION, intakeWristRotation));
-                setWristRotation(intakeWristRotation);
+                WristRotation -= WRIST_INCREMENT;
+                WristRotation = Math.max(MIN_WRIST_ROTATION, Math.min(MAX_WRIST_ROTATION, WristRotation));
+                setWristRotation(WristRotation);
             }
             else if(gamepad2.right_bumper) {
-                intakeWristRotation += ServoWristIncrement;
-                intakeWristRotation = Math.max(MIN_INTAKEWRIST_ROTATION, Math.min(MAX_INTAKEWRIST_ROTATION, intakeWristRotation));
-                setWristRotation(intakeWristRotation);
+                WristRotation += WRIST_INCREMENT;
+                WristRotation = Math.max(MIN_WRIST_ROTATION, Math.min(MAX_WRIST_ROTATION, WristRotation));
+                setWristRotation(WristRotation);
             }
 
             //Preset
@@ -202,24 +200,24 @@ public class WireFireTeleOp extends LinearOpMode {
                 setSlidesrotation(rotation, 0.3);
                 sleep(1000);
                 height = 5000;
-                setSlides(height, 0.7);
-                intakeWristRotation = 0.38;
-                setWristRotation(intakeWristRotation);
+                setSlides(height, 1.0);
+                WristRotation = 0.38;
+                setWristRotation(WristRotation);
             }
             else if(gamepad2.dpad_right){ //for the human player
                 height = 1640;
-                setSlides(height, 0.7);
-                intakeWristRotation = 0.52;
-                setWristRotation(intakeWristRotation);
+                setSlides(height, 1.0);
+                WristRotation = 0.52;
+                setWristRotation(WristRotation);
                 rotation = 393;
                 setSlidesrotation(rotation, 0.3);
 
             }
             else if(gamepad2.dpad_left) { //for the specimens on the bar
                 height = 3260;
-                setSlides(height, 0.7);
-                intakeWristRotation = 0.84;
-                setWristRotation(intakeWristRotation);
+                setSlides(height, 1.0);
+                WristRotation = 0.84;
+                setWristRotation(WristRotation);
                 sleep(250);
                 rotation = 800;
                 setSlidesrotation(rotation, 0.3);
@@ -230,14 +228,14 @@ public class WireFireTeleOp extends LinearOpMode {
                 sleep(1000);
                 rotation = 0;
                 setSlidesrotation(rotation, 0.4);
-                intakeWristRotation = 0.2;
-                setWristRotation(intakeWristRotation);
+                WristRotation = 0.2;
+                setWristRotation(WristRotation);
             }
             else if (gamepad2.x){ //To reset auto Left
                 height = 950;
                 setSlides(height, 1.0);
-                intakeWristRotation = 0.9;
-                setWristRotation(intakeWristRotation);
+                WristRotation = 0.9;
+                setWristRotation(WristRotation);
                 rotation = 1300;
                 setSlidesrotation(rotation, 0.78);
                 sleep(250);
@@ -271,9 +269,9 @@ public class WireFireTeleOp extends LinearOpMode {
             telemetry.addData("Slide Ticks:", slide_motor.getCurrentPosition());
             telemetry.addData("Rotation:", rotation);
             telemetry.addData("HandServo", intakeHand.getPosition());
-            telemetry.addData("HandServoRotation", intakeHandRotation);
+            telemetry.addData("HandServoRotation", clawRotation);
             telemetry.addData("WristRotation", wristRotation.getPosition());
-            telemetry.addData("WristServoRotation", intakeWristRotation);
+            telemetry.addData("WristServoRotation", WristRotation);
             telemetry.update();
         }
     }

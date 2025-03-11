@@ -58,10 +58,10 @@ public class WireFireFTC_LEFTSIDE_AUTO extends LinearOpMode {
 
     // Method to initialize the motors
     private void initializeMotors() {
-        frontleft = hardwareMap.get(DcMotor.class, "frontleft");
-        frontright = hardwareMap.get(DcMotor.class, "frontright");
-        backleft = hardwareMap.get(DcMotor.class, "backleft");
-        backright = hardwareMap.get(DcMotor.class, "backright");
+        frontleft = hardwareMap.get(DcMotorEx.class, "par0");
+        backleft = hardwareMap.get(DcMotorEx.class, "backleft");
+        backright = hardwareMap.get(DcMotorEx.class, "perp");
+        frontright = hardwareMap.get(DcMotorEx.class, "par1");
 
         slidesrotation = hardwareMap.get(DcMotorEx.class, "rotation_motor");
         slide_motor = hardwareMap.get(DcMotor.class, "slide_motor");

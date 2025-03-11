@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -56,10 +57,10 @@ public class WireFireRobotClass{
     public void initialize(boolean showTelemetry) {
         //Initialize the hardware variables
         //motor/device must match the names assigned during the robot configuration
-        frontleft = setupDriveMotor("frontleft", DcMotor.Direction.REVERSE);
-        frontright = setupDriveMotor("frontright", DcMotor.Direction.FORWARD);
+        frontleft = setupDriveMotor("par0", DcMotor.Direction.REVERSE);
+        frontright = setupDriveMotor("par1", DcMotor.Direction.FORWARD);
         backleft = setupDriveMotor("backleft", DcMotor.Direction.REVERSE);
-        backright = setupDriveMotor("backright", DcMotor.Direction.FORWARD);
+        backright = setupDriveMotor("perp", DcMotor.Direction.FORWARD);
 
         slidesrotation = setupSlidesMotor("rotation_motor", DcMotor.Direction.FORWARD);
         slide_motor = setupSlidesMotor("slide_motor", DcMotor.Direction.REVERSE);
