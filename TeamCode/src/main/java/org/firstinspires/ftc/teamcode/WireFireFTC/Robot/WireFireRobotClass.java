@@ -1,37 +1,35 @@
 package org.firstinspires.ftc.teamcode.WireFireFTC.Robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class WireFireRobotClass{
     //Create Variables for rotating slides
     int rotation = 0;
-    final int INCREMENT = 7;
+    final int INCREMENT = 3;
     final int MAX_ROTATION = 1400;
     final int MIN_ROTATION = 0;
 
     //Create Variables for slides
     int height = 0;
-    final int HEIGHT_INCREMENT = 50;
+    final double HEIGHT_INCREMENT = 10;
     final int MAX_HEIGHT = 4000;
-    final int ADJUSTED_MAX_HEIGHT = 4500;
+    final int ADJUSTED_MAX_HEIGHT = 5000;
     final int MIN_HEIGHT = 0;
 
     //Create Variables for Servo
-    double intakeHandRotation = 0.0;
-    double ServoHandIncrement = 0.04;
+    double intakeServoHand = 0.0;
+    double ServoHandIncrement = 0.025;
     final double MAX_INTAKEHAND_ROTATION = 0.20;
     final double MIN_INTAKEHAND_ROTATION = 0;
 
     double intakeWristRotation = 0.0;
-    double ServoWristIncrement = 0.04;
+    double ServoWristIncrement = 0.005;
     final double MAX_INTAKEWRIST_ROTATION = 0.9;
-    final double MIN_INTAKEWRIST_ROTATION = 0.2;
+    final double MIN_INTAKEWRIST_ROTATION = 0.3;
 
     //Create the objects for motors
     private DcMotor frontleft = null;
@@ -57,15 +55,15 @@ public class WireFireRobotClass{
     public void initialize(boolean showTelemetry) {
         //Initialize the hardware variables
         //motor/device must match the names assigned during the robot configuration
-        frontleft = setupDriveMotor("par0", DcMotor.Direction.REVERSE);
-        frontright = setupDriveMotor("par1", DcMotor.Direction.FORWARD);
+        frontleft = setupDriveMotor("frontleft", DcMotor.Direction.REVERSE);
+        frontright = setupDriveMotor("frontright", DcMotor.Direction.FORWARD);
         backleft = setupDriveMotor("backleft", DcMotor.Direction.REVERSE);
-        backright = setupDriveMotor("perp", DcMotor.Direction.FORWARD);
+        backright = setupDriveMotor("backright", DcMotor.Direction.FORWARD);
 
         slidesrotation = setupSlidesMotor("rotation_motor", DcMotor.Direction.FORWARD);
         slide_motor = setupSlidesMotor("slide_motor", DcMotor.Direction.REVERSE);
         //Servo/device must match the names assigned during the robot configuration
-        wristRotation = setupServo("wristServo", Servo.Direction.REVERSE);
+        //wristRotation = setupServo("wristServo", Servo.Direction.REVERSE);
         intakeHand = setupServo("intakeServo", Servo.Direction.REVERSE);
     }
 
@@ -179,12 +177,13 @@ public class WireFireRobotClass{
     //For Claw
     public void Claw(boolean t){
         if (t) {
-            intakeHandRotation += ServoHandIncrement;
-            intakeHandRotation = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeHandRotation));
-            setIntakeHand(intakeHandRotation);
+            intakeServoHand += ServoHandIncrement;
+            intakeServoHand = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeServoHand));
+            setIntakeHand(intakeServoHand);
         } else {
-            intakeHandRotation = 0.0;
-            setIntakeHand(intakeHandRotation);
+            intakeServoHand -= ServoHandIncrement;
+            intakeServoHand = Math.max(MIN_INTAKEHAND_ROTATION, Math.min(MAX_INTAKEHAND_ROTATION, intakeServoHand));
+            setIntakeHand(intakeServoHand);
         }
     }
 
@@ -218,7 +217,7 @@ public class WireFireRobotClass{
 
     //For Claw Movement
     public void setIntakeHand(double hand){
-        intakeHandRotation = hand;
+        intakeServoHand = hand;
         intakeHand.setPosition(hand);
     }
 

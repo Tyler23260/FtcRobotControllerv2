@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "Rightside")
-public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
+@Autonomous(name = "Human player-Autonomous")
+public class Human_player_auto extends LinearOpMode {
     //Used for Telemetry
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -42,12 +42,7 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         initializeServo();
         waitForStart();
         //Start of autonomous
-        intakeHandRotation = 0.0;
-        setIntakeHand(intakeHandRotation);
-        sleep(200);
-        intakeWristRotation = 0.9;
-        setWristRotation(intakeWristRotation);
-        movement(1.0, 0.0, 0.5, 0.0);
+
 
         /*sleep(200);
         movement(0.6,0.0,1.0,0.0);
@@ -121,10 +116,10 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
 
     // Method to initialize the motors
     private void initializeMotors() {
-        frontleft = hardwareMap.get(DcMotorEx.class, "par0");
+        frontleft = hardwareMap.get(DcMotorEx.class, "frontleft");
         backleft = hardwareMap.get(DcMotorEx.class, "backleft");
-        backright = hardwareMap.get(DcMotorEx.class, "perp");
-        frontright = hardwareMap.get(DcMotorEx.class, "par1");
+        backright = hardwareMap.get(DcMotorEx.class, "backright");
+        frontright = hardwareMap.get(DcMotorEx.class, "frontright");
 
         slidesrotation = hardwareMap.get(DcMotorEx.class, "rotation_motor");
         slide_motor = hardwareMap.get(DcMotor.class, "slide_motor");
@@ -157,7 +152,7 @@ public class WireFireFTC_RIGHT_SIDE_AUTO extends LinearOpMode {
         wristRotation = hardwareMap.get(Servo.class, "wristServo");
         intakeHand = hardwareMap.get(Servo.class, "intakeServo");
 
-        wristRotation.setDirection(Servo.Direction.REVERSE);
+        //wristRotation.setDirection(Servo.Direction.REVERSE);
         intakeHand.setDirection(Servo.Direction.REVERSE);
     }
 

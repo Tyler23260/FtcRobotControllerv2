@@ -61,15 +61,15 @@ public class Testing_TeleOp extends LinearOpMode {
 
             //Code for Slides using values to determine how long for the motors to be set until it reaches Target Position
             if (rotation < 1150) {
-                if (gamepad2.right_stick_y > 0.0) {
+                if (gamepad2.a) {
                     robot.Slides(false);
-                } else if (gamepad2.right_stick_y < 0.0) {
+                } else if (gamepad2.y) {
                     robot.Slides(true);
                 }
             } else if (rotation > 1150) {
-                if (gamepad2.right_stick_y > 0.0) {
+                if (gamepad2.a) {
                     robot.SlidesAdjusted(false);
-                } else if (gamepad2.right_stick_y < 0.0) {
+                } else if (gamepad2.y) {
                     robot.SlidesAdjusted(true);
                 }
             }
@@ -78,7 +78,7 @@ public class Testing_TeleOp extends LinearOpMode {
             //IntakeHand Servo
             if (gamepad2.right_trigger > 0.0) {
                 robot.Claw(true);
-            } else {
+            } else if (gamepad2.left_trigger > 0.0){
                 robot.Claw(false);
             }
 
@@ -91,7 +91,7 @@ public class Testing_TeleOp extends LinearOpMode {
 
             //Preset
             if (gamepad2.dpad_up) { //for the high basket
-                height = 4500;
+                height = 5000;
                 robot.setSlides(height, 0.7);
                 intakeWristRotation = 0.38;
                 robot.setWristRotation(intakeWristRotation);
@@ -100,21 +100,21 @@ public class Testing_TeleOp extends LinearOpMode {
                 robot.setSlidesrotation(rotation, 0.3);
 
             } else if (gamepad2.dpad_right) { //for the human player
-                height = 1640;
+                height = 1000;
                 robot.setSlides(height, 0.7);
-                intakeWristRotation = 0.52;
+                intakeWristRotation = 0.5;
                 robot.setWristRotation(intakeWristRotation);
-                rotation = 393;
+                rotation = 380;
                 robot.setSlidesrotation(rotation, 0.3);
 
             } else if (gamepad2.dpad_left) { //for the specimens on the bar
-                height = 3260;
-                robot.setSlides(height, 0.7);
-                intakeWristRotation = 0.84;
+                intakeWristRotation = 0.9;
                 robot.setWristRotation(intakeWristRotation);
+                rotation = 1300;
+                robot.setSlidesrotation(rotation, 0.70);
                 sleep(250);
-                rotation = 650;
-                robot.setSlidesrotation(rotation, 0.3);
+                height = 1900;
+                robot.setSlides(height, 0.7);
             } else if (gamepad2.dpad_down) { //retract
                 height = 100;
                 robot.setSlides(height, 1.0);
@@ -123,6 +123,11 @@ public class Testing_TeleOp extends LinearOpMode {
                 robot.setSlidesrotation(rotation, 0.4);
                 intakeWristRotation = 0.2;
                 robot.setWristRotation(intakeWristRotation);
+            } else if (gamepad2.b){ //To reset auto Left
+                intakeWristRotation = 0.9;
+                robot.setWristRotation(intakeWristRotation);
+                height = 0;
+                robot.setSlides(height, 1.0);
             }
 
 

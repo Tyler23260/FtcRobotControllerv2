@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "Leftside")
-public class WireFireFTC_LEFTSIDE_AUTO extends LinearOpMode {
+@Autonomous(name = "Basket-Autonomous")
+public class Basket_auto extends LinearOpMode {
     //Used for Telemetry
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -42,26 +42,35 @@ public class WireFireFTC_LEFTSIDE_AUTO extends LinearOpMode {
     @Override
     public void runOpMode() {
         initializeMotors();
+        intializeServo();
         waitForStart();
         movement(0.35, 0.0, -0.5, 0.0);
         stopMotors();
-        movement(1.7, -0.5, 0.0, 0.0);
-        stopMotors();
-        movement(0.5, 0.0, 0.5, -0.5);
-        stopMotors();
-        movement(0.5, 0.5, 0.0, 0.0);
-        stopMotors();
-        rotation = 1335;
-        setSlidesrotation(rotation, 1.0);
-        sleep(1000);
+        movement(0.2, -0.1, 0.0, 0.0);
+        intakeHandRotation = 0.5;
+        setIntakeHand(intakeHandRotation);
+        rotation = 50;
+        setSlidesrotation(rotation, 0.4);
+        height = 4000;
+        setSlides(height, 1.0);
+        sleep(5000);
+        rotation = 0;
+        setSlidesrotation(rotation,0.7);
+        intakeHandRotation = 0.2;
+        setIntakeHand(intakeHandRotation);
+        intakeWristRotation = 0.9;
+        setWristRotation(intakeWristRotation);
+        height = 0;
+        setSlides(height, 1.0);
+        sleep(30000);
     }
 
     // Method to initialize the motors
     private void initializeMotors() {
-        frontleft = hardwareMap.get(DcMotorEx.class, "par0");
+        frontleft = hardwareMap.get(DcMotorEx.class, "frontleft");
         backleft = hardwareMap.get(DcMotorEx.class, "backleft");
-        backright = hardwareMap.get(DcMotorEx.class, "perp");
-        frontright = hardwareMap.get(DcMotorEx.class, "par1");
+        backright = hardwareMap.get(DcMotorEx.class, "backright");
+        frontright = hardwareMap.get(DcMotorEx.class, "frontright");
 
         slidesrotation = hardwareMap.get(DcMotorEx.class, "rotation_motor");
         slide_motor = hardwareMap.get(DcMotor.class, "slide_motor");
