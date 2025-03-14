@@ -45,8 +45,8 @@ public class Telemetry_op extends LinearOpMode {
 
     double WristRotation = 0.0;
     double WRIST_INCREMENT = 0.005;
-    final double MIN_WRIST_ROTATION = 0.3; //originally 0.2
-    final double MAX_WRIST_ROTATION = 0.9; // originally 0.9
+    final double MIN_WRIST_ROTATION = 0.0; //originally 0.2
+    final double MAX_WRIST_ROTATION = 1.0; // originally 0.9
 
     //Create the objects for motors
     private DcMotor frontleft = null;
@@ -89,7 +89,7 @@ public class Telemetry_op extends LinearOpMode {
         slide_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slide_motor.setDirection(DcMotor.Direction.REVERSE);
 
-        wristRotation.setDirection(Servo.Direction.REVERSE);
+        //wristRotation.setDirection(Servo.Direction.REVERSE);
         intakeServo.setDirection(Servo.Direction.REVERSE);
 
         while(opModeInInit()) {

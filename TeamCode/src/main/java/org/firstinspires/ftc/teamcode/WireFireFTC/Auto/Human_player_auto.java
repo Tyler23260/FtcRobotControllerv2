@@ -43,7 +43,18 @@ public class Human_player_auto extends LinearOpMode {
         waitForStart();
         //Start of autonomous
 
-
+        setWristRotation(0.0);
+        setIntakeHand(0.0);
+        movement(0.3,0.6,0.0,0.0);
+        sleep(375);
+        stopMotors();
+        setSlidesrotation(1160,0.8);
+        sleep(300);
+        setSlides(2400,1.0);
+        setSlidesrotation(1170,0.8);
+        sleep(1300);
+        setIntakeHand(0.2);
+        sleep(30000);
         /*sleep(200);
         movement(0.6,0.0,1.0,0.0);
         stopMotors();

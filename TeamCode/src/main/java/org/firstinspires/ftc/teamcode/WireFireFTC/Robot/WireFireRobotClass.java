@@ -28,8 +28,8 @@ public class WireFireRobotClass{
 
     double intakeWristRotation = 0.0;
     double ServoWristIncrement = 0.005;
-    final double MAX_INTAKEWRIST_ROTATION = 0.9;
-    final double MIN_INTAKEWRIST_ROTATION = 0.3;
+    final double MAX_INTAKEWRIST_ROTATION = 1.0;
+    final double MIN_INTAKEWRIST_ROTATION = 0.0;
 
     //Create the objects for motors
     private DcMotor frontleft = null;
@@ -63,7 +63,7 @@ public class WireFireRobotClass{
         slidesrotation = setupSlidesMotor("rotation_motor", DcMotor.Direction.FORWARD);
         slide_motor = setupSlidesMotor("slide_motor", DcMotor.Direction.REVERSE);
         //Servo/device must match the names assigned during the robot configuration
-        //wristRotation = setupServo("wristServo", Servo.Direction.REVERSE);
+        wristRotation = setupServo("wristServo", Servo.Direction.FORWARD);
         intakeHand = setupServo("intakeServo", Servo.Direction.REVERSE);
     }
 

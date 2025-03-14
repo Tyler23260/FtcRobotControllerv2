@@ -53,21 +53,21 @@ public class WireFireTeleOp extends LinearOpMode {
         // Main control loop
         while (opModeIsActive()) {
             //Used for Slides_Motor see slide code for details
-            if (gamepad2.left_stick_y > 0.0) {
+            if (gamepad1.left_stick_y > 0.0) {
                 robot.SlidesRotation(false);
-            } else if (gamepad2.left_stick_y < 0.0) {
+            } else if (gamepad1.left_stick_y < 0.0) {
                 robot.SlidesRotation(true);
             }
 
             //Code for Slides using values to determine how long for the motors to be set until it reaches Target Position
             if (rotation < 1150) {
-                if (gamepad2.a) {
+                if (gamepad1.a) {
                     robot.Slides(false);
                 } else if (gamepad2.y) {
                     robot.Slides(true);
                 }
             } else if (rotation > 1150) {
-                if (gamepad2.a) {
+                if (gamepad1.a) {
                     robot.SlidesAdjusted(false);
                 } else if (gamepad2.y) {
                     robot.SlidesAdjusted(true);

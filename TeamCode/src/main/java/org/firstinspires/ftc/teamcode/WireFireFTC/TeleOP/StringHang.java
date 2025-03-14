@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.WireFireFTC.Robot.WireFireRobotClass;
 
 @TeleOp(name = "STRhang", group = "Linear OpMode")
-public class STRhang extends LinearOpMode {
+public class StringHang extends LinearOpMode {
     WireFireRobotClass robot = new WireFireRobotClass(this);
 
     private DcMotor STRhang = null;
