@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.WireFireFTC.Robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -20,6 +19,13 @@ public class WireFireRobotClass{
     final int ADJUSTED_MAX_HEIGHT = 5000;
     final int MIN_HEIGHT = 0;
 
+    //StringHang
+    /*private DcMotor STRhang = null;
+    int STRlength = 0;
+    final double STRlegnth_INCREMENT = 15;
+    final int STRlength_MIN_HEIGHT = 0;
+    final int STRlength_MAX_HEIGHT = 4500;*/
+
     //Create Variables for Servo
     double intakeServoHand = 0.0;
     double ServoHandIncrement = 0.025;
@@ -27,7 +33,7 @@ public class WireFireRobotClass{
     final double MIN_INTAKEHAND_ROTATION = 0;
 
     double intakeWristRotation = 0.0;
-    double ServoWristIncrement = 0.005;
+    double ServoWristIncrement = 0.001;
     final double MAX_INTAKEWRIST_ROTATION = 1.0;
     final double MIN_INTAKEWRIST_ROTATION = 0.0;
 
@@ -60,8 +66,9 @@ public class WireFireRobotClass{
         backleft = setupDriveMotor("backleft", DcMotor.Direction.REVERSE);
         backright = setupDriveMotor("backright", DcMotor.Direction.FORWARD);
 
-        slidesrotation = setupSlidesMotor("rotation_motor", DcMotor.Direction.FORWARD);
-        slide_motor = setupSlidesMotor("slide_motor", DcMotor.Direction.REVERSE);
+        slidesrotation = setupMotor("rotation_motor", DcMotor.Direction.FORWARD);
+        slide_motor = setupMotor("slide_motor", DcMotor.Direction.REVERSE);
+        //STRhang = setupMotor("string_hang", DcMotor.Direction.REVERSE);
         //Servo/device must match the names assigned during the robot configuration
         wristRotation = setupServo("wristServo", Servo.Direction.FORWARD);
         intakeHand = setupServo("intakeServo", Servo.Direction.REVERSE);
@@ -78,7 +85,7 @@ public class WireFireRobotClass{
     }
 
     //Setups the Slide Motor As Well As Setting Direction
-    private DcMotor setupSlidesMotor(String deviceName, DcMotor.Direction direction) {
+    private DcMotor setupMotor(String deviceName, DcMotor.Direction direction) {
         DcMotor aMotor = myOpMode.hardwareMap.get(DcMotor.class, deviceName);
         aMotor.setDirection(direction);
         aMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -201,6 +208,19 @@ public class WireFireRobotClass{
 
     }
 
+    /*public void STRHang(boolean t) {
+        if (t) {
+            STRlength += STRlegnth_INCREMENT;
+            STRlength = Math.max(STRlength_MIN_HEIGHT, Math.min(STRlength_MAX_HEIGHT, STRlength));
+            setSTRhang(STRlength, 1.0);
+        } else{
+            STRlength -= STRlegnth_INCREMENT;
+            STRlength = Math.max(STRlength_MIN_HEIGHT, Math.min(STRlength_MAX_HEIGHT, STRlength));
+            setSTRhang(STRlength, 1.0);
+        }
+
+    }*/
+
     //For Slide Rotation Movement
     public void setSlidesrotation(int rot, double pow) {
         rotation = rot;
@@ -226,4 +246,9 @@ public class WireFireRobotClass{
         intakeWristRotation = wrist;
         wristRotation.setPosition(wrist);
     }
+
+    /*private void setSTRhang(int rot, double pow) {
+        STRhang.setTargetPosition(rot);
+        STRhang.setPower(pow);
+    }*/
 }

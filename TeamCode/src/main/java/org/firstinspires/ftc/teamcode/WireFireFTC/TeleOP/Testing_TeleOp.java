@@ -52,6 +52,13 @@ public class Testing_TeleOp extends LinearOpMode {
 
         // Main control loop
         while (opModeIsActive()) {
+            //Used for STRhang see slide code for details
+            /*if (gamepad1.left_bumper) {
+                robot.STRHang(false);
+            } else if (gamepad1.right_bumper) {
+                robot.STRHang(true);
+            }*/
+
             //Used for Slides_Motor see slide code for details
             if (gamepad2.left_stick_y > 0.0) {
                 robot.SlidesRotation(false);

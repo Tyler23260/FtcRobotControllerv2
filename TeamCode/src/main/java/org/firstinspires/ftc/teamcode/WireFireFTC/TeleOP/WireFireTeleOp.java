@@ -17,9 +17,9 @@ public class WireFireTeleOp extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     //Power Multipliers
-    final double SAFE_DRIVE_SPEED = 0.9;
-    final double SAFE_STRAFE_SPEED = 0.9;
-    final double SAFE_TURN_SPEED = 0.85;
+    final double SAFE_DRIVE_SPEED = 0.8;
+    final double SAFE_STRAFE_SPEED = 0.8;
+    final double SAFE_TURN_SPEED = 0.75;
 
     //Create Variables for rotating slides
     int rotation = 0;
@@ -52,22 +52,29 @@ public class WireFireTeleOp extends LinearOpMode {
 
         // Main control loop
         while (opModeIsActive()) {
+            //Used for STRhang see slide code for details
+            /*if (gamepad1.left_bumper) {
+                robot.STRHang(false);
+            } else if (gamepad1.right_bumper) {
+                robot.STRHang(true);
+            }*/
+
             //Used for Slides_Motor see slide code for details
-            if (gamepad1.left_stick_y > 0.0) {
+            if (gamepad2.left_stick_y > 0.0) {
                 robot.SlidesRotation(false);
-            } else if (gamepad1.left_stick_y < 0.0) {
+            } else if (gamepad2.left_stick_y < 0.0) {
                 robot.SlidesRotation(true);
             }
 
             //Code for Slides using values to determine how long for the motors to be set until it reaches Target Position
             if (rotation < 1150) {
-                if (gamepad1.a) {
+                if (gamepad2.a) {
                     robot.Slides(false);
                 } else if (gamepad2.y) {
                     robot.Slides(true);
                 }
             } else if (rotation > 1150) {
-                if (gamepad1.a) {
+                if (gamepad2.a) {
                     robot.SlidesAdjusted(false);
                 } else if (gamepad2.y) {
                     robot.SlidesAdjusted(true);
@@ -84,16 +91,16 @@ public class WireFireTeleOp extends LinearOpMode {
 
             //Wrist Servo
             if (gamepad2.left_bumper) {
-                robot.Wrist(false);
-            } else if (gamepad2.right_bumper) {
                 robot.Wrist(true);
+            } else if (gamepad2.right_bumper) {
+                robot.Wrist(false);
             }
 
             //Preset
             if (gamepad2.dpad_up) { //for the high basket
                 height = 5000;
-                robot.setSlides(height, 0.7);
-                intakeWristRotation = 0.38;
+                robot.setSlides(height, 1.0);
+                intakeWristRotation = 0.0;
                 robot.setWristRotation(intakeWristRotation);
                 sleep(250);
                 rotation = 1300;
@@ -102,29 +109,31 @@ public class WireFireTeleOp extends LinearOpMode {
             } else if (gamepad2.dpad_right) { //for the human player
                 height = 1000;
                 robot.setSlides(height, 0.7);
-                intakeWristRotation = 0.5;
+                intakeWristRotation = 0.4;
                 robot.setWristRotation(intakeWristRotation);
                 rotation = 380;
                 robot.setSlidesrotation(rotation, 0.3);
 
             } else if (gamepad2.dpad_left) { //for the specimens on the bar
-                intakeWristRotation = 0.9;
+                intakeWristRotation = 0.3;
                 robot.setWristRotation(intakeWristRotation);
                 rotation = 1300;
                 robot.setSlidesrotation(rotation, 0.70);
                 sleep(250);
-                height = 1900;
+                height = 1700;
                 robot.setSlides(height, 0.7);
+                intakeHandRotation= 0.5;
+                robot.setIntakeHand(intakeHandRotation);
             } else if (gamepad2.dpad_down) { //retract
+                intakeWristRotation = 0.0;
+                robot.setWristRotation(intakeWristRotation);
                 height = 100;
                 robot.setSlides(height, 1.0);
-                sleep(150);
+                sleep(250);
                 rotation = 0;
                 robot.setSlidesrotation(rotation, 0.4);
-                intakeWristRotation = 0.2;
-                robot.setWristRotation(intakeWristRotation);
             } else if (gamepad2.b){ //To reset auto Left
-                intakeWristRotation = 0.9;
+                intakeWristRotation = 0.7;
                 robot.setWristRotation(intakeWristRotation);
                 height = 0;
                 robot.setSlides(height, 1.0);

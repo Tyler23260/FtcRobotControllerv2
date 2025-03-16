@@ -44,7 +44,19 @@ public class Basket_auto extends LinearOpMode {
         initializeMotors();
         intializeServo();
         waitForStart();
-        movement(0.35, 0.0, -0.5, 0.0);
+        setIntakeHand(0.0);
+        movement(0.3, -0.5, 0.0, 0.0);
+        stopMotors();
+        movement(0.4,0.0,-0.5,0.0);
+        stopMotors();
+        movement(0.1,0.0,0.0,0.9);
+        stopMotors();
+        setSlidesrotation(1250,0.3);
+        sleep(600);
+        setSlides(5000,1.0);
+        sleep(750);
+        setIntakeHand(0.3);
+        /*movement(0.35, 0.0, -0.5, 0.0);
         stopMotors();
         movement(0.2, -0.1, 0.0, 0.0);
         intakeHandRotation = 0.5;
@@ -61,7 +73,7 @@ public class Basket_auto extends LinearOpMode {
         intakeWristRotation = 0.9;
         setWristRotation(intakeWristRotation);
         height = 0;
-        setSlides(height, 1.0);
+        setSlides(height, 1.0);*/
         sleep(30000);
     }
 
